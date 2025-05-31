@@ -18,11 +18,11 @@ class CoinBar extends DrawableObject {
         this.y = 40;
         this.width = 200;
         this.height = 50;
-        this.loadCoinImages(0);
+        this.setPercentageCoin(0);
     }
 
-    loadCoinImages(coins) {
-        this.coins = coins
+    setPercentageCoin(coin) {
+        this.coins = coin
         let path = this.COIN_IMAGES[this.resolveCoinIndex()];
         this.img = this.imageCache[path];
     }
@@ -30,13 +30,13 @@ class CoinBar extends DrawableObject {
     resolveCoinIndex() {
         if (this.coins == 100) {
             return 5;
-        } else if (this.coins > 80) {
+        } else if (this.coins >= 80) {
             return 4;
-        } else if (this.coins > 60) {
+        } else if (this.coins >= 60) {
             return 3;
-        } else if (this.coins > 40) {
+        } else if (this.coins >= 40) {
             return 2;
-        } else if (this.coins > 20) {
+        } else if (this.coins >= 20) {
             return 1;
         } else {
             return 0;
