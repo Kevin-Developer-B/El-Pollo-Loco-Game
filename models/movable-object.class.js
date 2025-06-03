@@ -7,8 +7,8 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
 
     applyGravity() {
-        setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
+        this.gravityInterval = setInterval(() => {
+            if (!this.hasSplash && (this.isAboveGround() || this.speedY > 0)) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration
             }
@@ -16,12 +16,12 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
+        let groundLevel = 450;
         if (this instanceof ThrowableObject) {
             return true;
         } else {
-            return this.y < 180
+            return this.y + this.height < groundLevel;
         }
-
     }
 
     isColliding(mo) {
@@ -69,5 +69,5 @@ class MovableObject extends DrawableObject {
 
     jump() {
         this.speedY = 15
-    };
+    }
 }

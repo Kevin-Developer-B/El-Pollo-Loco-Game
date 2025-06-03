@@ -31,14 +31,29 @@ class World {
             this.checkCollectCoin();
             this.checkCollectBottle();
             this.checkThrowObject();
+            this.checkThrowableBottleObject();
+            // this.checkEndbossHit();
         }, 200);
     }
 
     checkThrowObject() {
-        if (this.keyboard.SPACE) {
+        if (this.keyboard.SPACE && this.bottleBar.bottle >= 1) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObject.push(bottle);
+            this.bottleBar.bottle--;
+            this.bottleBar.setPercentageBottle(this.bottleBar.bottle);
         }
+    }
+
+    checkThrowableBottleObject() {
+        this.throwableObject.forEach((bottle, index) => {
+            if (bottle.y > 350) {
+                bottle.splash();
+                setTimeout(() => {
+                    this.throwableObject.splice(index, 1);
+                }, 500);
+            }
+        })
     }
 
     checkCollisions() {
@@ -64,13 +79,21 @@ class World {
     checkCollectBottle() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                this.bottleBar.bottle += 1;
+                this.bottleBar.bottle++;
                 this.bottleBar.setPercentageBottle(this.bottleBar.bottle);
-
                 this.level.bottles.splice(index, 1);
             };
         });
     }
+
+    // checkEndbossHit() {
+    //     this.throwableObject.forEach((bottle, index) => {
+    //         if (bottle.isColliding(this.level.endboss) && !bottle.hasSplashed) {
+    //             this.level.endboss.hit(20); // z. B. 20 Schaden
+    //             bottle.splash(); // Animation und Bewegung stoppen
+    //         }
+    //     });
+    // }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
