@@ -69,4 +69,16 @@ class ThrowableObject extends MovableObject {
         }, 100);
     }
 
+    bossHitSplash() {
+        if (this.hasSplashed) return;
+        this.hasSplashed = true;
+
+        this.speedY = 0;
+        this.currentImage = 0;
+
+        setInterval(() => {
+            this.playAnimation(this.SPLASH_BOTTLE);
+        }, 100);
+    }
+
 }

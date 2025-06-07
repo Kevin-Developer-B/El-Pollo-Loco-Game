@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 1;
     energy = 100;
     lastHit = 0;
+    groundLevel = 450;
 
     applyGravity() {
         this.gravityInterval = setInterval(() => {
@@ -22,6 +23,10 @@ class MovableObject extends DrawableObject {
         } else {
             return this.y + this.height < groundLevel;
         }
+    }
+
+    isOnGround() {
+        return this.y >= this.groundLevel
     }
 
     isColliding(mo) {
@@ -68,6 +73,6 @@ class MovableObject extends DrawableObject {
     }
 
     jump() {
-        this.speedY = 15
+        this.speedY = 20;
     }
 }

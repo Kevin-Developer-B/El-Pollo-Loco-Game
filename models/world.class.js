@@ -32,7 +32,7 @@ class World {
             this.checkCollectBottle();
             this.checkThrowObject();
             this.checkThrowableBottleObject();
-            // this.checkEndbossHit();
+            this.checkEndbossHit();
         }, 200);
     }
 
@@ -86,14 +86,14 @@ class World {
         });
     }
 
-    // checkEndbossHit() {
-    //     this.throwableObject.forEach((bottle, index) => {
-    //         if (bottle.isColliding(this.level.endboss) && !bottle.hasSplashed) {
-    //             this.level.endboss.hit(20); // z. B. 20 Schaden
-    //             bottle.splash(); // Animation und Bewegung stoppen
-    //         }
-    //     });
-    // }
+    checkEndbossHit() {
+        this.throwableObject.forEach((bottle) => {
+            if (bottle.isColliding(this.level.enemies[4]) && !bottle.hasSplashed) {
+                this.level.enemies[4].hit(40); // z. B. 20 Schaden
+                bottle.bossHitSplash(); // Animation und Bewegung stoppen
+            }
+        });
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
