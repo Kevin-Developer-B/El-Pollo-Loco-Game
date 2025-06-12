@@ -2,6 +2,8 @@ class Character extends MovableObject {
     speed = 10;
     y = 180;
 
+    walkAudio = new Audio('audio/run-away-345727.mp3')
+
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -68,6 +70,8 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
+        this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMP);
         this.loadImages(this.IMAGES_DEAD);
@@ -79,6 +83,7 @@ class Character extends MovableObject {
     animation() {
 
         setInterval(() => {
+
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
             }
@@ -89,7 +94,7 @@ class Character extends MovableObject {
             }
 
             if (this.world.keyboard.UP && !this.isAboveGround()) {
-                this.loadImage(this.IMAGES_JUMP[2]);
+                this.playAnimation([this.IMAGES_JUMP[2]]);
                 this.jump();
             }
             this.world.camera_x = -this.x + 100;
@@ -100,28 +105,42 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                if (this.speedY >= 10) {
-                    this.playAnimation([this.IMAGES_JUMP[3]]); // Absprungbild
-                } 
+            }
+            else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                this.walkAnimation();
+            }
+            else if (this.moveLeft || this.moveRight || this.jump) {
+                this.playAnimation(this.IMAGES_IDLE);
+            }
+        }, 200);
+
+        setInterval(() => {
+
+            if (this.isAboveGround()) {
+                if (this.speedY >= 16) {
+                    this.playAnimation([this.IMAGES_JUMP[3]]);
+                    sounds.jump.play();
+                }
                 else if (this.speedY >= 0) {
-                    this.playAnimation([this.IMAGES_JUMP[4]]); // Flug oder Landung
-                } 
-                else if (this.speedY >= -10) {
-                    this.playAnimation([this.IMAGES_JUMP[5]]); // Flug oder Landung
-                } 
-                else if (this.speedY <= 10) {
-                    this.playAnimation([this.IMAGES_JUMP[6]]); // Flug oder Landung
-                } 
-                // else if (this.isOnGround && this.speedY < 19) {
-                //     this.playAnimation([this.IMAGES_JUMP[7]]); // Flug oder Landung
-                // }
-            } else {
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
+                    this.playAnimation([this.IMAGES_JUMP[4]]);
+                }
+                else if (this.speedY >= -6) {
+                    this.playAnimation([this.IMAGES_JUMP[5]]);
+                    sounds.flyDown.play();
+                }
+                else if (this.speedY >= -16) {
+                    this.playAnimation([this.IMAGES_JUMP[6]]);
+                }
+                else if (this.speedY >= -20) {
+                    this.playAnimation([this.IMAGES_JUMP[7]]);
+                }
+                else if (this.speedY >= -21) {
+                    this.playAnimation([this.IMAGES_JUMP[8]]);
+                }
+                else {
+                    this.playAnimation([this.IMAGES_JUMP[0]]);
                 }
             }
         }, 100);
     };
-
 }

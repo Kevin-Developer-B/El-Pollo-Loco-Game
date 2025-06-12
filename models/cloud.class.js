@@ -11,7 +11,10 @@ class Cloud extends MovableObject {
     }
 
     cloudAnimation() {
-        this.moveLeft();
+        setInterval(() => {
+            this.moveLeft();
+        }, 20);
+        
     }
 
     

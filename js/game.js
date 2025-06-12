@@ -2,6 +2,13 @@ let canvas;
 let world 
 let keyboard = new Keyboard();
 
+
+let sounds = {
+     walk: new Audio('audio/walk-on-grass-1-291984.mp3'),
+     jump: new Audio('audio/jump.mp3'),
+     flyDown: new Audio('audio/fly-down.mp3')
+};
+
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);

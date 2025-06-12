@@ -51,7 +51,8 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else {
+            } else { 
+                this.startMoving();
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 150);
@@ -59,7 +60,7 @@ class Endboss extends MovableObject {
 
     startMoving() {
         this.movementInterval = setInterval(() => {
-            if (this.energy > 0) {
+            if (this.energy >= 0) {
                 this.moveLeft();
             }
         }, 1000);

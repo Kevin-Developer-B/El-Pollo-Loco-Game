@@ -4,6 +4,7 @@ class World {
     canvas;
     ctx;
     keyboard;
+    sounds;
     camera_x = 0;
     healthBar = new HealthBar();
     coinBar = new CoinBar();
@@ -35,6 +36,7 @@ class World {
             this.checkEndbossHit();
         }, 200);
     }
+    
 
     checkThrowObject() {
         if (this.keyboard.SPACE && this.bottleBar.bottle >= 1) {
@@ -89,8 +91,8 @@ class World {
     checkEndbossHit() {
         this.throwableObject.forEach((bottle) => {
             if (bottle.isColliding(this.level.enemies[4]) && !bottle.hasSplashed) {
-                this.level.enemies[4].hit(40); // z. B. 20 Schaden
-                bottle.bossHitSplash(); // Animation und Bewegung stoppen
+                this.level.enemies[4].hit(40);
+                bottle.bossHitSplash();
             }
         });
     }

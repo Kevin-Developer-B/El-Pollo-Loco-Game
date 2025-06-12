@@ -17,16 +17,11 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        let groundLevel = 450;
         if (this instanceof ThrowableObject) {
             return true;
         } else {
-            return this.y + this.height < groundLevel;
+            return this.y + this.height < this.groundLevel;
         }
-    }
-
-    isOnGround() {
-        return this.y >= this.groundLevel
     }
 
     isColliding(mo) {
@@ -74,5 +69,11 @@ class MovableObject extends DrawableObject {
 
     jump() {
         this.speedY = 20;
+        this.wantsToJump = false;
+    }
+
+    walkAnimation() {
+        this.playAnimation(this.IMAGES_WALKING);
+        sounds.walk.play();
     }
 }
