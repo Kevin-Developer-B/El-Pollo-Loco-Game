@@ -4,9 +4,9 @@ let keyboard = new Keyboard();
 
 
 let sounds = {
-     walk: new Audio('audio/walk-on-grass-1-291984.mp3'),
+     walk: new Audio('audio/walk.mp3'),
      jump: new Audio('audio/jump.mp3'),
-     flyDown: new Audio('audio/fly-down.mp3')
+     throw: new Audio('audio/throw.mp3')
 };
 
 function init() {

@@ -12,6 +12,7 @@ class World {
     throwableObject = [];
     coins = new CoinObject();
     bottle = new BottleObject();
+    chicken = new Chicken();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -28,19 +29,22 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkCollisions();
+            // this.checkCollisions();
+            this.checkEnemyInteractions();
+            this.checkChickenHitByBottle();
             this.checkCollectCoin();
             this.checkCollectBottle();
             this.checkThrowObject();
             this.checkThrowableBottleObject();
             this.checkEndbossHit();
-        }, 200);
+        }, 100);
     }
-    
+
 
     checkThrowObject() {
         if (this.keyboard.SPACE && this.bottleBar.bottle >= 1) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            sounds.throw.play();
             this.throwableObject.push(bottle);
             this.bottleBar.bottle--;
             this.bottleBar.setPercentageBottle(this.bottleBar.bottle);
@@ -53,19 +57,66 @@ class World {
                 bottle.splash();
                 setTimeout(() => {
                     this.throwableObject.splice(index, 1);
-                }, 500);
+                }, 200);
             }
         })
     }
 
-    checkCollisions() {
+    checkEnemyInteractions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.healthBar.setPercentage(this.character.energy);
-            };
+                if (this.character.isJumpingOn(enemy) && !enemy.dead) {
+                    enemy.die();
+                    setTimeout(() => {
+                        this.level.enemies = this.level.enemies.filter(e => e !== enemy);
+                    }, 1000)
+                }
+                else if (!enemy.dead) {
+                    this.character.hit();
+                    this.healthBar.setPercentage(this.character.energy);
+                }
+            }
         });
     }
+
+    checkChickenHitByBottle() {
+        this.throwableObject.forEach((bottle) => {
+            this.level.enemies.forEach((enemy) => {
+                // Nur Chicken treffen (nicht Endboss)
+                if (
+                    enemy instanceof Chicken &&
+                    !enemy.dead &&
+                    bottle.isColliding(enemy) &&
+                    !bottle.hasSplashed
+                ) {
+                    enemy.die();
+                    bottle.splash();
+
+                    setTimeout(() => {
+                        this.level.enemies = this.level.enemies.filter(e => e !== enemy);
+                    }, 500);
+                }
+            });
+        });
+    }
+
+    // checkCollisions() {
+    //     this.level.enemies.forEach((enemy) => {
+    //         if (this.character.isColliding(enemy) && !enemy.dead) {
+    //             this.character.hit();
+    //             this.healthBar.setPercentage(this.character.energy);
+
+    //         }
+    //     });
+    // }
+
+    // checkJumpOnChicken() {
+    //     this.level.enemies.forEach((enemy) => {
+    //         if (this.character.isColliding(enemy) && this.character.isJumpingOn(enemy)) {
+    //             enemy.die();
+    //         }
+    //     });
+    // }
 
     checkCollectCoin() {
         this.level.coins.forEach((coin, index) => {
@@ -89,10 +140,16 @@ class World {
     }
 
     checkEndbossHit() {
+        const endboss = this.level.enemies.find(e => e instanceof Endboss);
+        if (!endboss) return;
+
         this.throwableObject.forEach((bottle) => {
-            if (bottle.isColliding(this.level.enemies[4]) && !bottle.hasSplashed) {
-                this.level.enemies[4].hit(40);
-                bottle.bossHitSplash();
+            if (
+                !bottle.hasSplashed &&
+                bottle.isColliding(endboss)
+            ) {
+                endboss.bossHit(40); // z. B. 40 Schaden
+                bottle.splash();
             }
         });
     }

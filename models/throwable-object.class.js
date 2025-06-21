@@ -81,4 +81,7 @@ class ThrowableObject extends MovableObject {
         }, 100);
     }
 
+    // bossHitSplash() {
+    //     this.splash(); // alias
+    // }
 }

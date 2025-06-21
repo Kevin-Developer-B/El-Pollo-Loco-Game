@@ -66,7 +66,7 @@ class Endboss extends MovableObject {
         }, 1000);
     }
 
-    hit(damage) {
+    bossHit(damage) {
         if (this.energy > 0) {
             this.energy -= damage;
             this.isHurt = true;

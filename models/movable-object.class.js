@@ -24,11 +24,26 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    // isColliding(mo) {
+    //     if (!mo) return false;
+    //     return this.x + this.width > mo.x &&
+    //         this.y + this.height > mo.y &&
+    //         this.x < mo.x &&
+    //         this.y < mo.y + mo.height;
+    // }
+
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height;
+        if (!mo) return false;
+        return this.x < mo.x + mo.width &&
+            this.x + this.width > mo.x &&
+            this.y < mo.y + mo.height &&
+            this.y + this.height > mo.y;
+    }
+
+    isJumpingOn(enemy) {
+        const isAbove = this.y + this.height <= enemy.y + 20;
+        const isFalling = this.speedY < 0;
+        return isAbove && isFalling;
     }
 
     hit() {

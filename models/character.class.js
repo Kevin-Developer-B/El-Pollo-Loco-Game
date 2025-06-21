@@ -1,8 +1,8 @@
 class Character extends MovableObject {
     speed = 10;
     y = 180;
-
-    walkAudio = new Audio('audio/run-away-345727.mp3')
+    lastActionTime = Date.now();
+    isSleeping = false;
 
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -103,13 +103,31 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
+                return;
+            }
+            if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+                return;
             }
-            else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) {
+                this.lastActionTime = Date.now();
+
+                if (this.isSleeping) {
+                    this.isSleeping = false;
+                    this.currentImage = 0;
+                }
                 this.walkAnimation();
+                return;
             }
-            else if (this.moveLeft || this.moveRight || this.jump) {
+            const idleTime = Date.now() - this.lastActionTime;
+            if (idleTime > 15000 ) {
+                if (!this.isSleeping) {
+                    this.isSleeping = true;
+                    this.currentImage = 0;
+                }
+
+                this.playAnimation(this.IMAGES_LONG_IDLE);
+            } else {
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, 200);
@@ -126,7 +144,6 @@ class Character extends MovableObject {
                 }
                 else if (this.speedY >= -6) {
                     this.playAnimation([this.IMAGES_JUMP[5]]);
-                    sounds.flyDown.play();
                 }
                 else if (this.speedY >= -16) {
                     this.playAnimation([this.IMAGES_JUMP[6]]);
