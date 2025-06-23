@@ -9,6 +9,7 @@ class World {
     healthBar = new HealthBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    bossBar = new BossBar();
     throwableObject = [];
     coins = new CoinObject();
     bottle = new BottleObject();
@@ -82,7 +83,6 @@ class World {
     checkChickenHitByBottle() {
         this.throwableObject.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
-                // Nur Chicken treffen (nicht Endboss)
                 if (
                     enemy instanceof Chicken &&
                     !enemy.dead &&
@@ -148,7 +148,8 @@ class World {
                 !bottle.hasSplashed &&
                 bottle.isColliding(endboss)
             ) {
-                endboss.bossHit(40); // z. B. 40 Schaden
+                endboss.bossHit(25);
+                this.bossBar.setPercentageBoss(endboss.energy);
                 bottle.splash();
             }
         });
@@ -165,6 +166,9 @@ class World {
         this.addToMap(this.healthBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
+        if (this.character.x > 2000) {
+            this.addToMap(this.bossBar);
+        }
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
