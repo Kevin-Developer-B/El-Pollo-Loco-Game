@@ -1,6 +1,7 @@
 let canvas;
 let world 
 let keyboard = new Keyboard();
+let start = false;
 
 
 let sounds = {
@@ -11,6 +12,8 @@ let sounds = {
 
 function init() {
     canvas = document.getElementById('canvas');
+    canvas.style.display = 'none';
+    loadStartMenu();
     world = new World(canvas, keyboard);
 }
 
@@ -57,3 +60,8 @@ window.addEventListener("keyup", (e) => {
         keyboard.DOWN  = false;
     }
 });
+
+function loadStartMenu() {
+    let start = document.getElementById('menu');
+    start.innerHTML = startMenuTemplate();
+}

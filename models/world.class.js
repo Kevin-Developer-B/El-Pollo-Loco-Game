@@ -162,6 +162,14 @@ class World {
 
         this.addObjectToMap(this.level.backgrounObject);
 
+        this.addToMap(this.character);
+        this.addObjectToMap(this.level.clouds);
+        this.addObjectToMap(this.level.enemies);
+        this.addObjectToMap(this.throwableObject);
+
+        this.addObjectToMap(this.level.coins);
+        this.addObjectToMap(this.level.bottles);
+
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.healthBar);
         this.addToMap(this.coinBar);
@@ -170,14 +178,6 @@ class World {
             this.addToMap(this.bossBar);
         }
         this.ctx.translate(this.camera_x, 0);
-
-        this.addToMap(this.character);
-        this.addObjectToMap(this.level.clouds);
-        this.addObjectToMap(this.level.enemies);
-        this.addObjectToMap(this.throwableObject);
-
-        this.addObjectToMap(this.level.coins);
-        this.addObjectToMap(this.level.bottles);
 
         this.ctx.translate(-this.camera_x, 0);
 
