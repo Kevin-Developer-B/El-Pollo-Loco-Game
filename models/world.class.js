@@ -30,7 +30,6 @@ class World {
 
     run() {
         setInterval(() => {
-            // this.checkCollisions();
             this.checkEnemyInteractions();
             this.checkChickenHitByBottle();
             this.checkCollectCoin();
@@ -99,24 +98,6 @@ class World {
             });
         });
     }
-
-    // checkCollisions() {
-    //     this.level.enemies.forEach((enemy) => {
-    //         if (this.character.isColliding(enemy) && !enemy.dead) {
-    //             this.character.hit();
-    //             this.healthBar.setPercentage(this.character.energy);
-
-    //         }
-    //     });
-    // }
-
-    // checkJumpOnChicken() {
-    //     this.level.enemies.forEach((enemy) => {
-    //         if (this.character.isColliding(enemy) && this.character.isJumpingOn(enemy)) {
-    //             enemy.die();
-    //         }
-    //     });
-    // }
 
     checkCollectCoin() {
         this.level.coins.forEach((coin, index) => {

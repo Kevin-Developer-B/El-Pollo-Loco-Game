@@ -80,7 +80,7 @@ class Endboss extends MovableObject {
 
     startMoving() {
         this.movementInterval = setInterval(() => {
-            if (this.energy >= 0) {
+            if (this.energy > 0) {
                 this.moveLeft();
             }
         }, 1500);
@@ -119,21 +119,24 @@ class Endboss extends MovableObject {
     }
 
     bossHit(damage) {
-        if (this.energy > 0) {
-            this.energy -= damage;
+        this.energy -= damage;
+        if (this.energy <= 0) {
+            this.energy = 0; // optional, um negative Energie zu vermeiden
+            this.isDead();
+        } else {
             this.isHurt = true;
+            clearInterval(this.movementInterval);
 
             setTimeout(() => {
                 this.isHurt = false;
             }, 1000);
-        } else {
-            this.isDead();
         }
     }
 
     isDead() {
+        this.playAnimation(this.IMAGES_DEAD);
         clearInterval(this.animationInterval);
         clearInterval(this.movementInterval);
-        this.playAnimation(this.IMAGES_DEAD);
+
     }
 }

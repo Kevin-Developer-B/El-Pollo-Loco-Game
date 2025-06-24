@@ -1,25 +1,24 @@
 let canvas;
-let world 
+let world
 let keyboard = new Keyboard();
 let start = false;
 
 
 let sounds = {
-     walk: new Audio('audio/walk.mp3'),
-     jump: new Audio('audio/jump.mp3'),
-     throw: new Audio('audio/throw.mp3')
+    walk: new Audio('audio/walk.mp3'),
+    jump: new Audio('audio/jump.mp3'),
+    throw: new Audio('audio/throw.mp3')
 };
 
 function init() {
+    loadStartMenu();
     canvas = document.getElementById('canvas');
     canvas.style.display = 'none';
-    loadStartMenu();
-    world = new World(canvas, keyboard);
 }
 
 window.addEventListener("keydown", (e) => {
     if (e.keyCode == 32) {
-        keyboard.SPACE  = true;
+        keyboard.SPACE = true;
     }
 
     if (e.keyCode == 37) {
@@ -33,15 +32,15 @@ window.addEventListener("keydown", (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = true;
     }
-    
+
     if (e.keyCode == 40) {
-        keyboard.DOWN  = true;
+        keyboard.DOWN = true;
     }
 });
 
 window.addEventListener("keyup", (e) => {
     if (e.keyCode == 32) {
-        keyboard.SPACE  = false;
+        keyboard.SPACE = false;
     }
 
     if (e.keyCode == 37) {
@@ -55,13 +54,22 @@ window.addEventListener("keyup", (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = false;
     }
-    
+
     if (e.keyCode == 40) {
-        keyboard.DOWN  = false;
+        keyboard.DOWN = false;
     }
 });
 
 function loadStartMenu() {
     let start = document.getElementById('menu');
     start.innerHTML = startMenuTemplate();
+}
+
+function startTheGame() {
+    canvas = document.getElementById('canvas');
+    canvas.style.display = 'block';
+    start = document.getElementById('menu');
+    start.style.display = "none"
+    initLevel();
+    world = new World(canvas, keyboard);
 }

@@ -3,7 +3,7 @@ function startMenuTemplate() {
         <div class="start-menu">
             <div class="start-buttons">
                 <button>Instrctions</button>
-                <button>Start Game</button>
+                <button onclick="startTheGame()">Start Game</button>
                 <button>Imprint</button>
             </div>
         </div>
