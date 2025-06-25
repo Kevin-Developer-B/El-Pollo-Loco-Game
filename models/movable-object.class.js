@@ -66,8 +66,8 @@ class MovableObject extends DrawableObject {
 
     isDead() {
         const dead = this.energy == 0;
-        if (dead) 
-        return dead;
+        if (dead)
+            return dead;
     }
 
     playAnimation(images) {
@@ -94,6 +94,12 @@ class MovableObject extends DrawableObject {
     jump() {
         this.speedY = 15;
         this.wantsToJump = false;
+    }
+
+    littleJump() {
+        if (this.dead) return;
+            this.speedY = 8;
+            this.wantsToJump = false;
     }
 
     walkAnimation() {
