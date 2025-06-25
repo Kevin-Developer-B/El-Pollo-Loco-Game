@@ -1,8 +1,9 @@
 class Character extends MovableObject {
     speed = 10;
-    y = 180;
+    y = 80;
     lastActionTime = Date.now();
     isSleeping = false;
+    hasPlayedDeathAnimation = false;
 
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -102,7 +103,10 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+                if (!this.hasPlayedDeathAnimation) {
+                    this.hasPlayedDeathAnimation = true;
+                    this.playOnceAnimation();
+                }
                 return;
             }
             if (this.isHurt()) {
@@ -120,7 +124,7 @@ class Character extends MovableObject {
                 return;
             }
             const idleTime = Date.now() - this.lastActionTime;
-            if (idleTime > 15000 ) {
+            if (idleTime > 15000) {
                 if (!this.isSleeping) {
                     this.isSleeping = true;
                     this.currentImage = 0;
@@ -133,7 +137,7 @@ class Character extends MovableObject {
         }, 200);
 
         setInterval(() => {
-
+            if (this.isDead()) return;
             if (this.isAboveGround()) {
                 if (this.speedY >= 16) {
                     this.playAnimation([this.IMAGES_JUMP[3]]);
@@ -160,4 +164,24 @@ class Character extends MovableObject {
             }
         }, 100);
     };
+
+    playOnceAnimation() {
+        this.speedY = 25;
+        this.applyGravity;
+        this.isKnockedBack = true;
+        this.dead = true;
+        let i = 0;
+        const deathFrames = this.IMAGES_DEAD.length;
+        this.deathInterval = setInterval(() => {
+
+            if (i < deathFrames) {
+                this.img = this.imageCache[this.IMAGES_DEAD[i]];
+                i++;
+                this.fallToGround();
+            }
+            else {
+                clearInterval(this.deathInterval);
+            }
+        }, 200);
+    }
 }

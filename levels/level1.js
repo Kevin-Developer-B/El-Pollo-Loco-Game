@@ -10,7 +10,17 @@ function initLevel() {
     ],
 
         [
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
             new Cloud()
+
         ],
 
         [

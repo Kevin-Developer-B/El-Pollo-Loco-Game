@@ -26,19 +26,20 @@ class ThrowableObject extends MovableObject {
         this.height = 80;
         this.width = 60;
         this.hasSplashed = false;
+        this.markForRemoval = false;
         this.throw(100, 150);
         this.bottleRotation();
     }
 
     throw() {
-        this.speedY = 25;
+        this.speedY = 15;
         this.applyGravity();
-
-        setInterval(() => {
+        this.throwInterval = setInterval(() => {
             if (!this.hasSplashed) {
                 this.x += 15;
-                if (this.y > 300) {
+                if (this.y >= 380) {
                     this.splash();
+                    clearInterval(this.throwInterval);
                 }
             }
         }, 50);
@@ -61,12 +62,19 @@ class ThrowableObject extends MovableObject {
 
         clearInterval(this.gravityInterval);
         clearInterval(this.rotationInterval);
+        clearInterval(this.throwInterval);
 
         this.currentImage = 0;
+        let i = 0;
         this.splashInterval = setInterval(() => {
-            this.playAnimation(this.SPLASH_BOTTLE);
-            clearInterval(this.splashInterval);
-        }, 100);
+            if (i < this.SPLASH_BOTTLE.length) {
+                this.img = this.imageCache[this.SPLASH_BOTTLE[i]];
+                i++;
+            } else {
+                clearInterval(this.splashInterval);
+                this.markForRemoval = true;
+            }
+        }, 80);
     }
 
     bossHitSplash() {
@@ -80,8 +88,4 @@ class ThrowableObject extends MovableObject {
             this.playAnimation(this.SPLASH_BOTTLE);
         }, 100);
     }
-
-    // bossHitSplash() {
-    //     this.splash(); // alias
-    // }
 }

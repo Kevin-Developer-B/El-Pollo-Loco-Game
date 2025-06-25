@@ -5,7 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 1;
     energy = 100;
     lastHit = 0;
-    groundLevel = 450;
+    groundLevel = 415;
 
     applyGravity() {
         this.gravityInterval = setInterval(() => {
@@ -24,14 +24,6 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    // isColliding(mo) {
-    //     if (!mo) return false;
-    //     return this.x + this.width > mo.x &&
-    //         this.y + this.height > mo.y &&
-    //         this.x < mo.x &&
-    //         this.y < mo.y + mo.height;
-    // }
-
     isColliding(mo) {
         if (!mo) return false;
         return this.x < mo.x + mo.width &&
@@ -47,11 +39,22 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 5;
+        if (this.isHurt()) return;
+        this.energy -= 20.5;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
+            const knockbackDistance = 40;
+            if (this.otherDirection) {
+                this.x += knockbackDistance;
+            } else {
+                this.x -= knockbackDistance;
+            }
+            this.isKnockedBack = true;
+            setTimeout(() => {
+                this.isKnockedBack = false;
+            }, 300);
         }
     }
 
@@ -62,7 +65,9 @@ class MovableObject extends DrawableObject {
     }
 
     isDead() {
-        return this.energy == 0;
+        const dead = this.energy == 0;
+        if (dead) 
+        return dead;
     }
 
     playAnimation(images) {
@@ -72,23 +77,41 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
-    moveRight() {
-        this.x += this.speed;
-        this.otherDirection = false;
+    moveLeft() {
+        if (!this.isKnockedBack) {
+            this.x -= this.speed;
+            this.otherDirection = false;
+        }
     }
 
-    moveLeft() {
-        this.x -= this.speed;
-        this.otherDirection = false;
+    moveRight() {
+        if (!this.isKnockedBack) {
+            this.x += this.speed;
+            this.otherDirection = false;
+        }
     }
 
     jump() {
-        this.speedY = 20;
+        this.speedY = 15;
         this.wantsToJump = false;
     }
 
     walkAnimation() {
         this.playAnimation(this.IMAGES_WALKING);
         sounds.walk.play();
+    }
+
+    fallToGround() {
+        const groundY = 500;
+        const fallSpeed = 5;
+
+        this.fallInterval = setInterval(() => {
+            if (this.y < groundY) {
+                this.y += fallSpeed;
+            } else {
+                clearInterval(this.fallInterval);
+                this.y = groundY;
+            }
+        }, 30);
     }
 }

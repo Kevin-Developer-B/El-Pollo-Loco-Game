@@ -42,7 +42,13 @@ class World {
 
 
     checkThrowObject() {
-        if (this.keyboard.SPACE && this.bottleBar.bottle >= 1) {
+        const endboss = this.getEndboss();
+        const canThrow =
+            this.keyboard.SPACE &&
+            this.bottleBar.bottle >= 1 &&
+            (!endboss || (!endboss.alertAnimationPlaying && !endboss.attackAnimationPlaying));
+
+        if (canThrow) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             sounds.throw.play();
             this.throwableObject.push(bottle);
@@ -52,14 +58,12 @@ class World {
     }
 
     checkThrowableBottleObject() {
-        this.throwableObject.forEach((bottle, index) => {
-            if (bottle.y > 350) {
-                bottle.splash();
-                setTimeout(() => {
-                    this.throwableObject.splice(index, 1);
-                }, 200);
+        for (let i = this.throwableObject.length - 1; i >= 0; i--) {
+            const bottle = this.throwableObject[i];
+            if (bottle.markForRemoval) {
+                this.throwableObject.splice(i, 1);
             }
-        })
+        }
     }
 
     checkEnemyInteractions() {
@@ -198,5 +202,9 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+    getEndboss() {
+        return this.level.enemies.find(e => e instanceof Endboss);
     }
 }

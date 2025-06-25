@@ -61,6 +61,7 @@ class Endboss extends MovableObject {
 
     animation() {
         this.animationInterval = setInterval(() => {
+            if (this.dead) return; // Wenn tot, nichts mehr animieren
             if (this.energy <= 0) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt) {
@@ -121,7 +122,7 @@ class Endboss extends MovableObject {
     bossHit(damage) {
         this.energy -= damage;
         if (this.energy <= 0) {
-            this.energy = 0; // optional, um negative Energie zu vermeiden
+            this.energy = 0;
             this.isDead();
         } else {
             this.isHurt = true;
@@ -134,9 +135,23 @@ class Endboss extends MovableObject {
     }
 
     isDead() {
-        this.playAnimation(this.IMAGES_DEAD);
+        this.dead = true; // optionales Flag
         clearInterval(this.animationInterval);
         clearInterval(this.movementInterval);
+        clearInterval(this.alertInterval);
+        clearInterval(this.attackInterval);
 
+        let i = 0;
+        const deathFrames = this.IMAGES_DEAD.length;
+        this.deathInterval = setInterval(() => {
+            if (i < deathFrames) {
+                this.img = this.imageCache[this.IMAGES_DEAD[i]];
+                i++;
+            } else {
+                clearInterval(this.deathInterval);
+                this.fallToGround();
+            }
+        }, 300);
     }
+
 }
