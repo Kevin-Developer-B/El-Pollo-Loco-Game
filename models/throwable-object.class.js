@@ -49,6 +49,8 @@ class ThrowableObject extends MovableObject {
         this.rotationInterval = setInterval(() => {
             if (!this.hasSplashed) {
                 this.playAnimation(this.THROW_ROTATION_BOTTLE);
+                sounds.bottle_rotate.volume = 0.1;
+                sounds.bottle_rotate.play();
             }
         }, 100);
     }
@@ -68,6 +70,7 @@ class ThrowableObject extends MovableObject {
         let i = 0;
         this.splashInterval = setInterval(() => {
             if (i < this.SPLASH_BOTTLE.length) {
+                sounds.bottle_shattering.play();
                 this.img = this.imageCache[this.SPLASH_BOTTLE[i]];
                 i++;
             } else {

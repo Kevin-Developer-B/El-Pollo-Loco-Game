@@ -15,20 +15,29 @@ body{
     overflow: hidden;
     font-family: 'exile-regular', Arial, Helvetica, sans-serif;
 }
+
 canvas{
     background-color: black;
 }
 
+.canvas-container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+}
 
 .start-menu{
+    position: relative;
     display: flex;
     align-items: start;
     justify-content: center;
     height: 480px;
     width: 720px;
     background-image: url('img/9_intro_outro_screens/start/startscreen_2.png');
-    background-position: left;
-    background-size: 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 
@@ -36,7 +45,7 @@ canvas{
     position: absolute;
     display: flex;
     gap: 50px;
-    top: 170px;
+    top: 80px;
 }
 
 .start-buttons button{
@@ -51,4 +60,46 @@ canvas{
     background-color: antiquewhite;
     transition: 150ms ease-in-out;
     transform: scale(1.2);
+}
+
+.settings-container{
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    width: 100%;
+    height: 100%;
+}
+
+.play-settings-container{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 40px;
+}
+
+button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transform: scale(1);
+    margin-bottom: 10px;
+}
+
+button:hover{
+    transform: scale(1.2);
+}
+
+svg{
+    height: 30px;
+    fill: orange;
+    background: transparent;
+}
+
+.no-mute {
+    background-image: url('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e3e3e3"><path d="M136-80 400-344H160v-80h320v320h-80v-184L136-80Zm344-400v-320h80v184l264-264 56 56-264 264h184v80H480Z"/></svg>');
+}
+
+.playbuttons-settins-container{
+    position: absolute;
 }

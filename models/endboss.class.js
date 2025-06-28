@@ -61,7 +61,7 @@ class Endboss extends MovableObject {
 
     animation() {
         this.animationInterval = setInterval(() => {
-            if (this.dead) return; // Wenn tot, nichts mehr animieren
+            if (this.dead) return; 
             if (this.energy <= 0) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt) {
@@ -105,6 +105,7 @@ class Endboss extends MovableObject {
 
     playAttackAnimation() {
         this.attackAnimationPlaying = true;
+        sounds.boss_alert.play();
         this.currentImage = 0;
 
         let i = 0;
@@ -127,7 +128,7 @@ class Endboss extends MovableObject {
         } else {
             this.isHurt = true;
             clearInterval(this.movementInterval);
-
+            sounds.chicken_sound.play();
             setTimeout(() => {
                 this.isHurt = false;
             }, 1000);
@@ -135,7 +136,7 @@ class Endboss extends MovableObject {
     }
 
     isDead() {
-        this.dead = true; // optionales Flag
+        this.dead = true;
         clearInterval(this.animationInterval);
         clearInterval(this.movementInterval);
         clearInterval(this.alertInterval);

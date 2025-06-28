@@ -1,19 +1,36 @@
 let canvas;
 let world
 let keyboard = new Keyboard();
-let start = false;
+let gameMuted = sessionStorage.getItem("gameMuted") ? JSON.parse(sessionStorage.getItem("gameMuted")) : false;
+
 
 
 let sounds = {
     walk: new Audio('audio/walk.mp3'),
     jump: new Audio('audio/jump.mp3'),
-    throw: new Audio('audio/throw.mp3')
+    hurt: new Audio('audio/ough.mp3'),
+    throw: new Audio('audio/throw.mp3'),
+    bottle_rotate: new Audio('audio/rotate.mp3'),
+    bottle_shattering: new Audio('audio/bottle-shattering.mp3'),
+    bottle_clanging: new Audio('audio/bottles-clanging.mp3'),
+    snoring: new Audio('audio/snoring.mp3'),
+    start_screen: new Audio('audio/start_music.mp3'),
+    background_music: new Audio('audio/play_music.mp3'),
+    boss_alert: new Audio('audio/boss-alert.mp3'),
+    chicken_sound: new Audio('audio/chicken-sound.mp3'),
+    dead_chicken: new Audio('audio/dead-chicken.mp3'),
+    lost: new Audio('audio/lost.mp3'),
+    successful: new Audio('audio/successful.mp3')
 };
 
 function init() {
     loadStartMenu();
     canvas = document.getElementById('canvas');
     canvas.style.display = 'none';
+}
+
+if (sessionStorage.getItem("gameMuted") === null) {
+    sessionStorage.setItem("gameMuted", JSON.stringify(false));
 }
 
 window.addEventListener("keydown", (e) => {
@@ -65,11 +82,27 @@ function loadStartMenu() {
     start.innerHTML = startMenuTemplate();
 }
 
+function playBackgroundmusic() {
+    if (gameMuted) return;
+    const backgroundMusic = sounds.background_music;
+    backgroundMusic.loop = true;
+    backgroundMusic.volume = 0.05;
+    backgroundMusic.play();
+}
+
 function startTheGame() {
     canvas = document.getElementById('canvas');
-    canvas.style.display = 'block';
     start = document.getElementById('menu');
+    buttons = document.getElementById('playSettingsButton')
+    canvas.style.display = 'block';
     start.style.display = "none"
+    buttons.style.display = "block"
+    document.getElementById('mute-icon').style.display = gameMuted ? 'none' : '';
+    document.getElementById('unMute-icon').style.display = gameMuted ? '' : 'none';
     initLevel();
     world = new World(canvas, keyboard);
+
+    if (!gameMuted) {
+        playBackgroundmusic();
+    }
 }

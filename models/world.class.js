@@ -94,7 +94,6 @@ class World {
                 ) {
                     enemy.die();
                     bottle.splash();
-
                     setTimeout(() => {
                         this.level.enemies = this.level.enemies.filter(e => e !== enemy);
                     }, 500);
@@ -120,6 +119,7 @@ class World {
                 this.bottleBar.bottle++;
                 this.bottleBar.setPercentageBottle(this.bottleBar.bottle);
                 this.level.bottles.splice(index, 1);
+                sounds.bottle_clanging.play();
             };
         });
     }

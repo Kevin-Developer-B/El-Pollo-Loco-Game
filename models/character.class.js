@@ -110,6 +110,7 @@ class Character extends MovableObject {
                 return;
             }
             if (this.isHurt()) {
+                sounds.hurt.play();
                 this.playAnimation(this.IMAGES_HURT);
                 return;
             }
@@ -131,6 +132,7 @@ class Character extends MovableObject {
                 }
 
                 this.playAnimation(this.IMAGES_LONG_IDLE);
+                sounds.snoring.play();
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
             }
@@ -141,7 +143,6 @@ class Character extends MovableObject {
             if (this.isAboveGround()) {
                 if (this.speedY >= 16) {
                     this.playAnimation([this.IMAGES_JUMP[3]]);
-                    sounds.jump.play();
                 }
                 else if (this.speedY >= 0) {
                     this.playAnimation([this.IMAGES_JUMP[4]]);
