@@ -82,6 +82,16 @@ function loadStartMenu() {
     start.innerHTML = startMenuTemplate();
 }
 
+function loadGameOverScreen() {
+    let gameOver = document.getElementById('menu');
+    gameOver.innerHTML = gameOverTemplate();
+}
+
+function loadYouWinScreen() {
+    let youWin = document.getElementById('menu');
+    youWin.innerHTML = youWinTemplate();
+}
+
 function playBackgroundmusic() {
     if (gameMuted) return;
     const backgroundMusic = sounds.background_music;
@@ -101,8 +111,26 @@ function startTheGame() {
     document.getElementById('unMute-icon').style.display = gameMuted ? '' : 'none';
     initLevel();
     world = new World(canvas, keyboard);
-
     if (!gameMuted) {
         playBackgroundmusic();
     }
+}
+
+function showGameOverScreen() {
+    sounds.background_music.pause();
+    canvas.style.display = 'none';
+    gameOver = document.getElementById('menu');
+    gameOver.style.display = "block"
+    loadGameOverScreen();
+}
+
+function showYouWinScreen() {
+    Object.values(sounds).forEach(sound => {
+        sound.pause();
+        sound.volume = 0;
+    });
+    canvas.style.display = 'none';
+    youWin = document.getElementById('menu');
+    youWin.style.display = "block"
+    loadYouWinScreen();
 }

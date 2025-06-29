@@ -61,7 +61,7 @@ class Endboss extends MovableObject {
 
     animation() {
         this.animationInterval = setInterval(() => {
-            if (this.dead) return; 
+            if (this.dead) return;
             if (this.energy <= 0) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt) {
@@ -84,7 +84,7 @@ class Endboss extends MovableObject {
             if (this.energy > 0) {
                 this.moveLeft();
             }
-        }, 1500);
+        }, 300);
     }
 
     playAlertAnimation() {
@@ -141,6 +141,7 @@ class Endboss extends MovableObject {
         clearInterval(this.movementInterval);
         clearInterval(this.alertInterval);
         clearInterval(this.attackInterval);
+        
 
         let i = 0;
         const deathFrames = this.IMAGES_DEAD.length;
@@ -153,6 +154,10 @@ class Endboss extends MovableObject {
                 this.fallToGround();
             }
         }, 300);
+        setTimeout(() => {
+            showYouWinScreen();
+        }, 3000);
+        
     }
 
 }

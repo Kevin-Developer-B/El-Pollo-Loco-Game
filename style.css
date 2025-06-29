@@ -3,7 +3,7 @@
     src: url('fonts/exile-regular.ttf');
 }
 
-body{
+body {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -16,11 +16,11 @@ body{
     font-family: 'exile-regular', Arial, Helvetica, sans-serif;
 }
 
-canvas{
+canvas {
     background-color: black;
 }
 
-.canvas-container{
+.canvas-container {
     position: relative;
     width: 100%;
     height: 100%;
@@ -29,7 +29,7 @@ canvas{
     justify-content: end;
 }
 
-.start-menu{
+.start-menu {
     position: relative;
     display: flex;
     align-items: start;
@@ -41,14 +41,14 @@ canvas{
     background-repeat: no-repeat;
 }
 
-.start-buttons{
+.start-buttons {
     position: absolute;
     display: flex;
     gap: 50px;
     top: 80px;
 }
 
-.start-buttons button{
+.start-buttons button {
     background-color: aqua;
     border: 0;
     border-radius: 10px;
@@ -56,13 +56,13 @@ canvas{
     transform: scale(1);
 }
 
-.start-buttons button:hover{
+.start-buttons button:hover {
     background-color: antiquewhite;
     transition: 150ms ease-in-out;
     transform: scale(1.2);
 }
 
-.settings-container{
+.settings-container {
     display: flex;
     align-items: end;
     justify-content: end;
@@ -70,7 +70,7 @@ canvas{
     height: 100%;
 }
 
-.play-settings-container{
+.play-settings-container {
     display: flex;
     justify-content: end;
     width: 100%;
@@ -86,11 +86,11 @@ button {
     margin-bottom: 10px;
 }
 
-button:hover{
+button:hover {
     transform: scale(1.2);
 }
 
-svg{
+svg {
     height: 30px;
     fill: orange;
     background: transparent;
@@ -100,6 +100,55 @@ svg{
     background-image: url('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e3e3e3"><path d="M136-80 400-344H160v-80h320v320h-80v-184L136-80Zm344-400v-320h80v184l264-264 56 56-264 264h184v80H480Z"/></svg>');
 }
 
-.playbuttons-settins-container{
+.playbuttons-settins-container {
     position: absolute;
+}
+
+.end-screen-container {
+    width: 720px;
+    height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(233, 218, 169);
+}
+
+.close-button-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+}
+
+.close-button {
+    margin: 20px;
+    font-size: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: black;
+    color: antiquewhite;
+}
+
+.close-button:hover {
+    box-shadow: inset 0px 0px 10px 3px rgba(255, 255, 255, 0.5);
+}
+
+.game-over-img {
+    width: 500px;
+    position: absolute;
+}
+
+.restart-button {
+    margin-bottom: 20px;
+    font-size: 30px;
+    padding: 20px;
+    background-color: black;
+    color: antiquewhite;
+    border-radius: 10px;
+}
+
+.restart-button:hover {
+    box-shadow: inset 0px 0px 10px 3px rgba(255, 255, 255, 0.5);
 }

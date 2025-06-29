@@ -182,6 +182,7 @@ class Character extends MovableObject {
             }
             else {
                 clearInterval(this.deathInterval);
+                showGameOverScreen();
             }
         }, 200);
     }

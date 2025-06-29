@@ -12,8 +12,8 @@ function toggleMute() {
     muteAllSounds();
   } else {
     unmuteAllSounds();
-    sounds.play.currentTime = 0;
-    sounds.play.play();
+    sounds.background_music.currentTime = 0;
+    sounds.background_music.play();
   }
 }
 

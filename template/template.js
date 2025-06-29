@@ -22,3 +22,27 @@ function startMenuTemplate() {
         
     `
 }
+
+function gameOverTemplate() {
+    return `
+        <div class="end-screen-container">
+            <div class="close-button-container">
+                <button class="close-button" onclick="loadStartMenu()">X</button>
+            </div>
+            <img class="game-over-img" src="img/You won, you lost/Game Over.png" alt="">
+            <button class="restart-button" onclick="startTheGame()">Restart</button>
+        </div>
+    `
+}
+
+function youWinTemplate() {
+    return `
+        <div class="end-screen-container">
+            <div class="close-button-container">
+                <button class="close-button" onclick="loadStartMenu()">X</button>
+            </div>
+            <img class="game-over-img" src="img/You won, you lost/You won A.png" alt="">
+            <button class="restart-button" onclick="startTheGame()">Restart</button>
+        </div>
+    `
+}
