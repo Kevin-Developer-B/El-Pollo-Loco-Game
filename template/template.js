@@ -1,6 +1,6 @@
 function startMenuTemplate() {
     return `
-        <div class="start-menu">
+        <div id="startMenu" class="start-menu">
             <div class="start-buttons">
                 <button>Instrctions</button>
                 <button onclick="startTheGame(), playBackgroundmusic()">Start Game</button>
@@ -25,7 +25,7 @@ function startMenuTemplate() {
 
 function gameOverTemplate() {
     return `
-        <div class="end-screen-container">
+    <div id="gameOver" class="end-screen-container">
             <div class="close-button-container">
                 <button class="close-button" onclick="loadStartMenu()">X</button>
             </div>
@@ -37,12 +37,14 @@ function gameOverTemplate() {
 
 function youWinTemplate() {
     return `
-        <div class="end-screen-container">
+    <div id="menu">
+        <div id="youWin" class="end-screen-container">
             <div class="close-button-container">
                 <button class="close-button" onclick="loadStartMenu()">X</button>
             </div>
             <img class="game-over-img" src="img/You won, you lost/You won A.png" alt="">
             <button class="restart-button" onclick="startTheGame()">Restart</button>
+        </div>
         </div>
     `
 }

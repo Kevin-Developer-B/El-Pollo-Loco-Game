@@ -107,7 +107,7 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.coinBar.coins += 20;
                 this.coinBar.setPercentageCoin(this.coinBar.coins);
-
+                sounds.coin.play();
                 this.level.coins.splice(index, 1);
             };
         });

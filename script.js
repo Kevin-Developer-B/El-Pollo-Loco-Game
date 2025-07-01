@@ -70,21 +70,47 @@ function closetFullscreen() {
   exitFullscreen(fullscreen);
 }
 
+function fullscreenBiggerValidation() {
+   const elements = ['startMenu', 'canvas', 'gameOver', 'youWin'];
+  elements.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.width = "100%";
+      el.style.height = "100vh";
+    }
+  });
+}
+
+function fullscreenSmalerValidation() {
+  const elements = ['startMenu', 'canvas', 'gameOver', 'youWin'];
+  elements.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.width = "720px";
+      el.style.height = "480px";
+    }
+  });
+}
 
 function enterFullscreen(element) {
   if (element.requestFullscreen) {
     element.requestFullscreen();
+    fullscreenBiggerValidation();
   } else if (element.msRequestFullscreen) {
     element.msRequestFullscreen();
+    fullscreenBiggerValidation();
   } else if (element.webkitRequestFullscreen) {
     element.webkitRequestFullscreen();
+    fullscreenBiggerValidation();
   }
 }
 
 function exitFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
+    fullscreenSmalerValidation();
   } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
+    fullscreenSmalerValidation();
   }
 }
