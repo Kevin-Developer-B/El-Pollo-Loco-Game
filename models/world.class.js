@@ -49,7 +49,9 @@ class World {
             (!endboss || (!endboss.alertAnimationPlaying && !endboss.attackAnimationPlaying));
 
         if (canThrow) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            let direction = this.character.otherDirection ? -1 : 1;
+            let offsetX = direction * 50;
+            let bottle = new ThrowableObject(this.character.x + offsetX, this.character.y + 90, direction);
             sounds.throw.play();
             this.throwableObject.push(bottle);
             this.bottleBar.bottle--;
@@ -85,9 +87,13 @@ class World {
 
     checkChickenHitByBottle() {
         this.throwableObject.forEach((bottle) => {
+            if (Date.now() - bottle.spawnTime < bottle.collisionDelay) {
+                return;
+            }
+
             this.level.enemies.forEach((enemy) => {
                 if (
-                    enemy instanceof Chicken &&
+                    (enemy instanceof Chicken || enemy instanceof YellowChicken) &&
                     !enemy.dead &&
                     bottle.isColliding(enemy) &&
                     !bottle.hasSplashed
@@ -115,12 +121,15 @@ class World {
 
     checkCollectBottle() {
         this.level.bottles.forEach((bottle, index) => {
-            if (this.character.isColliding(bottle)) {
+            if (
+                this.character.isColliding(bottle) &&
+                this.bottleBar.bottle < 5
+            ) {
                 this.bottleBar.bottle++;
                 this.bottleBar.setPercentageBottle(this.bottleBar.bottle);
                 this.level.bottles.splice(index, 1);
                 sounds.bottle_clanging.play();
-            };
+            }
         });
     }
 
@@ -135,7 +144,7 @@ class World {
             ) {
                 endboss.bossHit(25);
                 this.bossBar.setPercentageBoss(endboss.energy);
-                bottle.splash();
+                bottle.bossHitSplash();
             }
         });
     }

@@ -12,8 +12,9 @@ function toggleMute() {
     muteAllSounds();
   } else {
     unmuteAllSounds();
-    sounds.background_music.currentTime = 0;
-    sounds.background_music.play();
+    if (sounds.background_music.paused) {
+      sounds.background_music.play();
+    }
   }
 }
 

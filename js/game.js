@@ -2,7 +2,7 @@ let canvas;
 let world
 let keyboard = new Keyboard();
 let gameMuted = sessionStorage.getItem("gameMuted") ? JSON.parse(sessionStorage.getItem("gameMuted")) : false;
-
+let gameActive = false;
 
 
 let sounds = {
@@ -36,6 +36,7 @@ if (sessionStorage.getItem("gameMuted") === null) {
 }
 
 window.addEventListener("keydown", (e) => {
+    if (!gameActive) return;
     if (e.keyCode == 32) {
         keyboard.SPACE = true;
     }
@@ -58,6 +59,7 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
+    if (!gameActive) return;
     if (e.keyCode == 32) {
         keyboard.SPACE = false;
     }
@@ -79,9 +81,39 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
+function resetKeyboard() {
+    keyboard.LEFT = false;
+    keyboard.RIGHT = false;
+    keyboard.UP = false;
+    keyboard.DOWN = false;
+    keyboard.SPACE = false;
+}
+
 function loadStartMenu() {
-    let start = document.getElementById('menu');
+    const canvas = document.getElementById('canvas');
+    if (canvas) {
+        canvas.style.display = 'none';
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    const buttons = document.getElementById('playSettingsButton');
+    if (buttons) buttons.style.display = 'none';
+    Object.values(sounds).forEach(sound => {
+        sound.pause();
+        sound.currentTime = 0;
+    });
+    const start = document.getElementById('menu');
+    start.style.display = 'block';
     start.innerHTML = startMenuTemplate();
+}
+
+function showImprint() {
+    window.location.href = './imprint.html';
+}
+
+function loadInstrctionsScreen() {
+    let instrctions = document.getElementById('menu');
+    instrctions.innerHTML = instrctionsTemplate();
 }
 
 function loadGameOverScreen() {
@@ -103,6 +135,7 @@ function playBackgroundmusic() {
 }
 
 function startTheGame() {
+    gameActive = true;
     canvas = document.getElementById('canvas');
     start = document.getElementById('menu');
     buttons = document.getElementById('playSettingsButton')
@@ -111,6 +144,13 @@ function startTheGame() {
     buttons.style.display = "block"
     document.getElementById('mute-icon').style.display = gameMuted ? 'none' : '';
     document.getElementById('unMute-icon').style.display = gameMuted ? '' : 'none';
+
+    Object.values(sounds).forEach(sound => {
+        sound.pause();
+        sound.currentTime = 0;
+    });
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     initLevel();
     world = new World(canvas, keyboard);
     if (gameMuted) {
@@ -122,9 +162,17 @@ function startTheGame() {
 }
 
 function showGameOverScreen() {
+    gameActive = false;
+    resetKeyboard();
     buttons = document.getElementById('playSettingsButton');
     sounds.background_music.pause();
     sounds.lost.play();
+    setTimeout(() => {
+        Object.values(sounds).forEach(sound => {
+            sound.pause();
+            sound.volume = 0;
+        });
+    }, 2000);
     canvas.style.display = 'none';
     gameOver = document.getElementById('menu');
     gameOver.style.display = "block"
@@ -133,6 +181,7 @@ function showGameOverScreen() {
 }
 
 function showYouWinScreen() {
+    gameActive = false;
     buttons = document.getElementById('playSettingsButton');
     sounds.successful.play();
     setTimeout(() => {

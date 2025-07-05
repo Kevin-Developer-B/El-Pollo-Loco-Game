@@ -81,22 +81,30 @@ class Character extends MovableObject {
         this.animation();
     }
 
+    offset = {
+        top: 100,
+        bottom: 0,
+        left: 20,
+        right: 20
+    }
+
     animation() {
 
         setInterval(() => {
+            if (!this.isHurtStatus && !this.isKnockedBack) {
+                if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                    this.moveRight();
+                }
 
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-            }
+                if (this.world.keyboard.LEFT && this.x > -600) {
+                    this.moveLeft();
+                    this.otherDirection = true;
+                }
 
-            if (this.world.keyboard.LEFT && this.x > -600) {
-                this.moveLeft();
-                this.otherDirection = true;
-            }
-
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
-                this.playAnimation([this.IMAGES_JUMP[2]]);
-                this.jump();
+                if (this.world.keyboard.UP && !this.isAboveGround()) {
+                    this.playAnimation([this.IMAGES_JUMP[2]]);
+                    this.jump();
+                }
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
@@ -114,7 +122,7 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
                 return;
             }
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP) {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.isHurtStatus) {
                 this.lastActionTime = Date.now();
 
                 if (this.isSleeping) {
@@ -136,7 +144,7 @@ class Character extends MovableObject {
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
             }
-        }, 200);
+        }, 100);
 
         setInterval(() => {
             if (this.isDead()) return;

@@ -1,6 +1,8 @@
 class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
+    isKnockedBack = false;
+    isHurtStatus = false;
     speedY = 0;
     acceleration = 1;
     energy = 100;
@@ -26,10 +28,18 @@ class MovableObject extends DrawableObject {
 
     isColliding(mo) {
         if (!mo) return false;
-        return this.x < mo.x + mo.width &&
-            this.x + this.width > mo.x &&
-            this.y < mo.y + mo.height &&
-            this.y + this.height > mo.y;
+        return this.x + this.width - this.offset.right > mo.x + this.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.width + mo.x - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+
+    }
+
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
     }
 
     isJumpingOn(enemy) {
@@ -40,21 +50,26 @@ class MovableObject extends DrawableObject {
 
     hit() {
         if (this.isHurt()) return;
-        this.energy -= 20.5;
+        this.energy -= 15.5;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
+            this.lastActionTime = Date.now();
+            this.isHurtStatus = true;
+            this.isKnockedBack = true;
+
             const knockbackDistance = 40;
             if (this.otherDirection) {
                 this.x += knockbackDistance;
             } else {
                 this.x -= knockbackDistance;
             }
-            this.isKnockedBack = true;
+
             setTimeout(() => {
                 this.isKnockedBack = false;
-            }, 300);
+                this.isHurtStatus = false;
+            }, 800);
         }
     }
 
@@ -78,14 +93,14 @@ class MovableObject extends DrawableObject {
     }
 
     moveLeft() {
-        if (!this.isKnockedBack) {
+        if (!this.isKnockedBack && !this.isHurtStatus) {
             this.x -= this.speed;
             this.otherDirection = false;
         }
     }
 
     moveRight() {
-        if (!this.isKnockedBack) {
+        if (!this.isKnockedBack && !this.isHurtStatus) {
             this.x += this.speed;
             this.otherDirection = false;
         }
@@ -99,8 +114,8 @@ class MovableObject extends DrawableObject {
 
     littleJump() {
         if (this.dead) return;
-            this.speedY = 8;
-            this.wantsToJump = false;
+        this.speedY = 8;
+        this.wantsToJump = false;
     }
 
     walkAnimation() {

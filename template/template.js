@@ -2,10 +2,18 @@ function startMenuTemplate() {
     return `
         <div id="startMenu" class="start-menu">
             <div class="start-buttons">
-                <button>Instrctions</button>
+                <button onclick="loadInstrctionsScreen()">Instrctions</button>
                 <button onclick="startTheGame(), playBackgroundmusic()">Start Game</button>
-                <button>Imprint</button>
+                <button onclick="showImprint()">Imprint</button>
             </div>
+        </div>
+    `
+}
+
+function instrctionsTemplate() {
+    return `
+        <div>
+            <img src="img/assets/keyboard-layout.png" alt="">
         </div>
     `
 }
