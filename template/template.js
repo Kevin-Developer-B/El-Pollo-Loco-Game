@@ -13,7 +13,10 @@ function startMenuTemplate() {
 function instrctionsTemplate() {
     return `
         <div class="layout-container">
+            <div class="instructions-header">
             <h2>Instructions</h2>
+            <button onclick="loadStartMenu()">X</button>
+            </div>
             <img src="img/assets/tastatur-layout.png" alt="">
             <p class="description-container">
                 Game Description: <br>

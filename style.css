@@ -12,12 +12,12 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    
+
     overflow: hidden;
     font-family: 'exile-regular', Arial, Helvetica, sans-serif;
 }
 
-h1{
+h1 {
     margin-top: 100px;
     margin-bottom: 50px;
 }
@@ -158,40 +158,92 @@ svg {
     box-shadow: inset 0px 0px 10px 3px rgba(255, 255, 255, 0.5);
 }
 
-.layout-container{
+.imprint-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(156, 35, 51, 0.199);
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    border-radius: 10px;
+}
+
+.imprint-container h2{
+    margin-top: 10px;
+}
+
+.imprint-container p{
+    margin: 5px;
+}
+
+.imprint-container a {
+    text-decoration: none;
+    color: brown;
+}
+
+.imprint-container a:hover{
+    color: orange;
+}
+
+.imprint-container button{
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(102, 49, 25);
+}
+
+.imprint-container button:hover{
+    color: orange;
+}
+
+.layout-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgba(252, 255, 255, 0.747);
+    background-color: rgba(156, 35, 51, 0.199);
     padding: 30px;
     border-radius: 10px;
 }
 
-h2{
+.instructions-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.instructions-header button {
+    position: absolute;
+    margin-left: 980px;
+    font-size: 30px;
+}
+
+h2 {
     margin-top: 0;
     margin-bottom: 10px;
 }
 
-.description-container{
+.description-container {
     padding: 10px;
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
 }
 
-@media only screen and (max-width: 720px){
+@media only screen and (max-width: 720px) {
     menu {
         width: 100%;
     }
+
     canvas {
         width: 100%;
     }
 }
 
-@media only screen and (max-height: 480px){
+@media only screen and (max-height: 480px) {
     menu {
         height: 100vh;
     }
+
     canvas {
         height: 100vh;
     }

@@ -111,6 +111,10 @@ function showImprint() {
     window.location.href = './imprint.html';
 }
 
+function backToTheStartMenu() {
+    window.location.href = './index.html';
+}
+
 function loadInstrctionsScreen() {
     let instrctions = document.getElementById('menu');
     instrctions.innerHTML = instrctionsTemplate();
