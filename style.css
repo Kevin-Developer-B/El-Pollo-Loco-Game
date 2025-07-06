@@ -158,6 +158,27 @@ svg {
     box-shadow: inset 0px 0px 10px 3px rgba(255, 255, 255, 0.5);
 }
 
+.layout-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(252, 255, 255, 0.747);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+h2{
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.description-container{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
 @media only screen and (max-width: 720px){
     menu {
         width: 100%;

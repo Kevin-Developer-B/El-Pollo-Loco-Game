@@ -12,8 +12,13 @@ function startMenuTemplate() {
 
 function instrctionsTemplate() {
     return `
-        <div>
-            <img src="img/assets/keyboard-layout.png" alt="">
+        <div class="layout-container">
+            <h2>Instructions</h2>
+            <img src="img/assets/tastatur-layout.png" alt="">
+            <p class="description-container">
+                Game Description: <br>
+                Move your character, but watch out for enemies, dodge them, and collect coins. Good luck!
+            </p>
         </div>
     `
 }
