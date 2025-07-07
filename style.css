@@ -3,18 +3,31 @@
     src: url('fonts/exile-regular.ttf');
 }
 
+html,
+body {
+    overflow: hidden;
+}
+
 body {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     background-image: url('img/desert-background/desert-background.png');
     height: 100vh;
-    background-position: center;
+    margin: 0;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-
-    overflow: hidden;
+    background-size: cover;
     font-family: 'exile-regular', Arial, Helvetica, sans-serif;
+}
+
+.spinner-overlay {
+    display: none;
+    height: 480px;
+    width: 720px;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
 }
 
 h1 {
@@ -22,35 +35,44 @@ h1 {
     margin-bottom: 50px;
 }
 
+#menu {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    max-width: 720px;
+    max-height: 480px;
+    width: 100%;
+    height: 100%;
+}
+
 canvas {
     background-color: black;
     display: block;
 }
-
-.canvas-container {
-    display: flex;
-    align-items: end;
-    justify-content: end;
-}
-
 
 .start-menu {
     position: relative;
     display: flex;
     align-items: start;
     justify-content: center;
-    height: 480px;
-    width: 720px;
+    text-align: center;
+    height: 100%;
+    width: 100%;
     background-image: url('img/9_intro_outro_screens/start/startscreen_2.png');
-    background-size: 100% 100%;
     background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-size: 100% 100%;
 }
 
 .start-buttons {
     position: absolute;
     display: flex;
     gap: 50px;
-    top: 80px;
+    top: 10%;
 }
 
 .start-buttons button {
@@ -105,13 +127,30 @@ svg {
     background-image: url('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e3e3e3"><path d="M136-80 400-344H160v-80h320v320h-80v-184L136-80Zm344-400v-320h80v184l264-264 56 56-264 264h184v80H480Z"/></svg>');
 }
 
-.playbuttons-settins-container {
+.canvas-container {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+}
+
+canvas {
+    height: 100%;
+    width: 100%;
+}
+
+.mute-button{
     position: absolute;
+    top: 15px;
+    left: 50%;
 }
 
 .end-screen-container {
-    width: 720px;
-    height: 480px;
+    background-image: url('img/You won, you lost/Game Over.png');
+    background-position: center;
+    background-size: 400px;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,8 +180,8 @@ svg {
 }
 
 .game-over-img {
-    width: 500px;
-    position: absolute;
+    width: 70%;
+    position: relative;
 }
 
 .restart-button {
@@ -168,11 +207,11 @@ svg {
     border-radius: 10px;
 }
 
-.imprint-container h2{
+.imprint-container h2 {
     margin-top: 10px;
 }
 
-.imprint-container p{
+.imprint-container p {
     margin: 5px;
 }
 
@@ -181,18 +220,18 @@ svg {
     color: brown;
 }
 
-.imprint-container a:hover{
+.imprint-container a:hover {
     color: orange;
 }
 
-.imprint-container button{
+.imprint-container button {
     margin-top: 10px;
     font-size: 15px;
     font-weight: 600;
     color: rgb(102, 49, 25);
 }
 
-.imprint-container button:hover{
+.imprint-container button:hover {
     color: orange;
 }
 
@@ -227,24 +266,120 @@ h2 {
     padding: 10px;
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
+    font-family: fantasy;
+}
+
+#mobile {
+    display: none;
+}
+
+.mobile-container {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 80px;
+    width: 100%;
+    height: 60px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 60px;
+}
+
+.buttons-container button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    background-color: antiquewhite;
+    border-radius: 50px;
+}
+
+.buttons-container button svg {
+    fill: black;
+}
+
+.buttons-container button:hover {
+    transform: scale(1)
+}
+
+.arrow {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.jump-img {
+    width: 30px;
+    height: 30px;
+}
+
+.bottle-img {
+    height: 30px;
+}
+
+.rotation-notice {
+    display: none;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: fantasy;
+    font-size: 32px;
 }
 
 @media only screen and (max-width: 720px) {
-    menu {
+    canvas {
         width: 100%;
     }
 
-    canvas {
+    h1 {
+        display: none;
+    }
+
+    #mobile {
         width: 100%;
+        display: flex;
     }
 }
 
 @media only screen and (max-height: 480px) {
-    menu {
+    canvas {
         height: 100vh;
     }
 
-    canvas {
-        height: 100vh;
+    h1 {
+        display: none;
+    }
+
+    #mobile {
+        width: 100%;
+        display: flex;
+    }
+}
+
+@media only screen and (orientation: portrait) {
+    .rotation-notice {
+        display: flex;
+    }
+
+    #mobile {
+        display: none !important;
+    }
+}
+
+@media only screen and (orientation: landscape) {
+    #rotate-notice {
+        display: none;
     }
 }

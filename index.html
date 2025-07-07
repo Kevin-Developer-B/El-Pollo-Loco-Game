@@ -33,11 +33,14 @@
 
 <body onload="init()">
     <h1>El Pollo Loco</h1>
+    <div id="loadSpinner" class="spinner-overlay d-none">
+        <img src="img/assets/loading-spinner.gif" alt="">
+    </div>
+    <div id="menu"></div>
     <div class="canvas-container">
-        <div id="menu"></div>
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="playSettingsButton" class="playbuttons-settins-container" style="display: none;">
-            <button onclick="toggleMute()">
+            <button class="mute-button" onclick="toggleMute()">
                 <svg id="mute-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e3e3e3">
                     <path
                         d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66T660-480q0 51-26.5 94.5T560-320ZM400-606l-86 86H200v80h114l86 86v-252Z" />
@@ -48,7 +51,34 @@
                         d="M792-56 671-177q-25 16-53 27.5T560-131v-82q29-11 53-22L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56ZM650-422l-90-90v-130q47 22 73.5 66T650-422ZM480-592 376-696l104-104v208Zm-80 238v-94l-72-72H200v80h114l86 86Z" />
                 </svg>
             </button>
+            <div id="mobile" class="mobile-container">
+                <div class="buttons-container">
+                    <button id="btnLeft" class="arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 960 960"
+                            fill="#000000">
+                            <path d="M640 880L240 480l400-400 71 71-329 329 329 329-71 71Z" />
+                        </svg>
+                    </button>
+                    <button id="btnRight" class="arrow">
+                        <svg xmlns=" http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 960 960"
+                            fill="#000000">
+                            <path d="M321 880l-71-71 329-329-329-329 71-71 400 400L321 880Z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="buttons-container">
+                    <button id="btnJump"><img class="jump-img" src="img/assets/jump.png" alt=""></button>
+                    <button id="btnThrow"><img class="bottle-img" src="img/assets/bottle.png" alt=""></button>
+                </div>
+            </div>
         </div>
+    </div>
+
+    <div id="popUp">
+
+    </div>
+    <div class="rotation-notice">
+        <p>Please rotate your device to play the game in landscape mode.</p>
     </div>
 </body>
 

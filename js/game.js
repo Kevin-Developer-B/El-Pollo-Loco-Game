@@ -29,57 +29,12 @@ function init() {
     loadStartMenu();
     canvas = document.getElementById('canvas');
     canvas.style.display = 'none';
+    keyboard.MobilePressEvents();
 }
 
 if (sessionStorage.getItem("gameMuted") === null) {
     sessionStorage.setItem("gameMuted", JSON.stringify(false));
 }
-
-window.addEventListener("keydown", (e) => {
-    if (!gameActive) return;
-    if (e.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-
-    if (e.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
-
-    if (e.keyCode == 38) {
-        keyboard.UP = true;
-    }
-
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
-
-    if (e.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
-});
-
-window.addEventListener("keyup", (e) => {
-    if (!gameActive) return;
-    if (e.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-
-    if (e.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-
-    if (e.keyCode == 38) {
-        keyboard.UP = false;
-    }
-
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-
-    if (e.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-});
 
 function resetKeyboard() {
     keyboard.LEFT = false;
@@ -87,6 +42,14 @@ function resetKeyboard() {
     keyboard.UP = false;
     keyboard.DOWN = false;
     keyboard.SPACE = false;
+}
+
+function loadingSpinner(show = true) {
+    const spinner = document.getElementById("loadSpinner");
+    if (spinner) {
+        spinner.style.display = show ? 'flex' : 'none';
+        
+    }
 }
 
 function loadStartMenu() {
@@ -140,29 +103,33 @@ function playBackgroundmusic() {
 
 function startTheGame() {
     gameActive = true;
-    canvas = document.getElementById('canvas');
     start = document.getElementById('menu');
-    buttons = document.getElementById('playSettingsButton')
-    canvas.style.display = 'block';
     start.style.display = "none"
-    buttons.style.display = "block"
-    document.getElementById('mute-icon').style.display = gameMuted ? 'none' : '';
-    document.getElementById('unMute-icon').style.display = gameMuted ? '' : 'none';
+    loadingSpinner(true);
+    setTimeout(() => {
+        canvas = document.getElementById('canvas');
+        buttons = document.getElementById('playSettingsButton')
+        canvas.style.display = 'block';
+        buttons.style.display = "block"
+        document.getElementById('mute-icon').style.display = gameMuted ? 'none' : '';
+        document.getElementById('unMute-icon').style.display = gameMuted ? '' : 'none';
 
-    Object.values(sounds).forEach(sound => {
-        sound.pause();
-        sound.currentTime = 0;
-    });
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    initLevel();
-    world = new World(canvas, keyboard);
-    if (gameMuted) {
-        muteAllSounds();
-    } else {
-        unmuteAllSounds();
-        playBackgroundmusic();
-    }
+        Object.values(sounds).forEach(sound => {
+            sound.pause();
+            sound.currentTime = 0;
+        });
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        initLevel();
+        world = new World(canvas, keyboard);
+        if (gameMuted) {
+            muteAllSounds();
+        } else {
+            unmuteAllSounds();
+            playBackgroundmusic();
+        }
+        loadingSpinner(false);
+    }, 1500);
 }
 
 function showGameOverScreen() {
