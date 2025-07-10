@@ -42,6 +42,7 @@ function resetKeyboard() {
     keyboard.UP = false;
     keyboard.DOWN = false;
     keyboard.SPACE = false;
+    ESCAPE = false;
 }
 
 function loadingSpinner(show = true) {
@@ -164,6 +165,22 @@ function showYouWinScreen() {
     canvas.style.display = 'none';
     buttons.style.display = "none"
     youWin = document.getElementById('menu');
-    youWin.style.display = "block"
+    youWin.style.display = 'block'
     loadYouWinScreen();
+}
+
+function popUp() {
+    popUp = document.getElementById('popUp')
+    popUp.style.display = 'block'
+}
+
+function popUpYes() {
+    popUp = document.getElementById('popUp')
+    popUp.style.display = 'none'
+    init();
+}
+
+function popUpNO() {
+    popUp = document.getElementById('popUp')
+    popUp.style.display = 'none'
 }

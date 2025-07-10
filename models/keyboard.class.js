@@ -4,6 +4,8 @@ class Keyboard {
     UP = false;
     DOWN = false;
     SPACE = false;
+    ESCAPE = false;
+    L = false;
 
     constructor() {
         this.DesktopKeyEvents();
@@ -11,6 +13,9 @@ class Keyboard {
     DesktopKeyEvents() {
         window.addEventListener("keydown", (e) => {
             if (!gameActive) return;
+            if (e.keyCode == 27) {
+                return popUp();
+            }
             if (e.keyCode == 32) {
                 keyboard.SPACE = true;
             }
@@ -30,10 +35,19 @@ class Keyboard {
             if (e.keyCode == 40) {
                 keyboard.DOWN = true;
             }
+            if (e.keyCode == 27) {
+                keyboard.DOWN = true;
+            }
+            if (e.keyCode == 76) {
+                keyboard.L = true;
+            }
         });
 
         window.addEventListener("keyup", (e) => {
             if (!gameActive) return;
+            if (e.keyCode == 27) {
+                keyboard.ESCAPE = false;
+            }
             if (e.keyCode == 32) {
                 keyboard.SPACE = false;
             }
@@ -52,6 +66,9 @@ class Keyboard {
 
             if (e.keyCode == 40) {
                 keyboard.DOWN = false;
+            }
+            if (e.keyCode == 76) {
+                keyboard.L = false;
             }
         });
     }

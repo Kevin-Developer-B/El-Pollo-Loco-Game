@@ -1,6 +1,6 @@
 function startMenuTemplate() {
     return `
-        <div class="start-menu">
+        <div class="menu-screens">
             <div class="start-buttons">
                 <button onclick="loadInstrctionsScreen()">Instrctions</button>
                 <button onclick="startTheGame()">Start Game</button>
@@ -28,23 +28,26 @@ function instrctionsTemplate() {
 
 function gameOverTemplate() {
     return `
-    <div class="end-screen-container">
-            <div class="close-button-container">
-                <button class="close-button" onclick="loadStartMenu()">X</button>
+        <div class="menu-screens">
+            <div class="lost-game">
+                <div class="close-button-container">
+                    <button class="close-button" onclick="loadStartMenu()">X</button>
+                </div>
+                <button class="restart-button" onclick="startTheGame()">Restart</button>
             </div>
-            <button class="restart-button" onclick="startTheGame()">Restart</button>
         </div>
     `
 }
 
 function youWinTemplate() {
     return `
-        <div class="end-screen-container">
-            <div class="close-button-container">
-                <button class="close-button" onclick="loadStartMenu()">X</button>
+        <div class="menu-screens">
+            <div class="win-game">
+                <div class="close-button-container">
+                    <button class="close-button" onclick="loadStartMenu()">X</button>
+                </div>
+                <button class="restart-button" onclick="startTheGame()">Restart</button>
             </div>
-            <img class="game-over-img" src="img/You won, you lost/You won A.png" alt="">
-            <button class="restart-button" onclick="startTheGame()">Restart</button>
         </div>
     `
 }
