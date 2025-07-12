@@ -67,7 +67,7 @@ function loadStartMenu() {
         sound.currentTime = 0;
     });
     const start = document.getElementById('menu');
-    start.style.display = 'block';
+    start.style.display = 'flex';
     start.innerHTML = startMenuTemplate();
 }
 
