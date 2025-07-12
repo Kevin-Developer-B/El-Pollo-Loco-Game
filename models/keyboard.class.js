@@ -3,8 +3,8 @@ class Keyboard {
     RIGHT = false;
     UP = false;
     DOWN = false;
-    SPACE = false;
     ESCAPE = false;
+    B = false;
     L = false;
 
     constructor() {
@@ -14,10 +14,7 @@ class Keyboard {
         window.addEventListener("keydown", (e) => {
             if (!gameActive) return;
             if (e.keyCode == 27) {
-                return popUp();
-            }
-            if (e.keyCode == 32) {
-                keyboard.SPACE = true;
+                popUp();
             }
 
             if (e.keyCode == 37) {
@@ -38,6 +35,9 @@ class Keyboard {
             if (e.keyCode == 27) {
                 keyboard.DOWN = true;
             }
+             if (e.keyCode == 66) {
+                keyboard.B = true;
+            }
             if (e.keyCode == 76) {
                 keyboard.L = true;
             }
@@ -47,9 +47,6 @@ class Keyboard {
             if (!gameActive) return;
             if (e.keyCode == 27) {
                 keyboard.ESCAPE = false;
-            }
-            if (e.keyCode == 32) {
-                keyboard.SPACE = false;
             }
 
             if (e.keyCode == 37) {
@@ -67,6 +64,11 @@ class Keyboard {
             if (e.keyCode == 40) {
                 keyboard.DOWN = false;
             }
+
+            if (e.keyCode == 66) {
+                keyboard.B = false;
+            }
+
             if (e.keyCode == 76) {
                 keyboard.L = false;
             }

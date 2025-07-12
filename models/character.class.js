@@ -71,6 +71,7 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
+        sounds.snoring.loop = true;
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_WALKING);
@@ -118,6 +119,7 @@ class Character extends MovableObject {
                 return;
             }
             if (this.isHurt()) {
+                this.stopSnoring();
                 sounds.hurt.play();
                 this.playAnimation(this.IMAGES_HURT);
                 return;
@@ -128,6 +130,7 @@ class Character extends MovableObject {
                 if (this.isSleeping) {
                     this.isSleeping = false;
                     this.currentImage = 0;
+                    this.stopSnoring();
                 }
                 this.walkAnimation();
                 return;
@@ -137,11 +140,21 @@ class Character extends MovableObject {
                 if (!this.isSleeping) {
                     this.isSleeping = true;
                     this.currentImage = 0;
+
+                    if (this.world && gameActive && sounds.snoring.paused) {
+                        sounds.snoring.currentTime = 0;
+                        sounds.snoring.play();
+                    }
                 }
 
                 this.playAnimation(this.IMAGES_LONG_IDLE);
-                sounds.snoring.play();
             } else {
+                if (this.isSleeping) {
+                    this.isSleeping = false;
+                    this.currentImage = 0;
+                    this.stopSnoring();
+                }
+
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, 100);
@@ -193,5 +206,12 @@ class Character extends MovableObject {
                 showGameOverScreen();
             }
         }, 200);
+    }
+
+    stopSnoring() {
+        if (sounds.snoring && !sounds.snoring.paused) {
+            sounds.snoring.pause();
+            sounds.snoring.currentTime = 0;
+        }
     }
 }

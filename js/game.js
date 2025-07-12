@@ -26,6 +26,7 @@ let sounds = {
 };
 
 function init() {
+    this.world
     loadStartMenu();
     canvas = document.getElementById('canvas');
     canvas.style.display = 'none';
@@ -41,7 +42,7 @@ function resetKeyboard() {
     keyboard.RIGHT = false;
     keyboard.UP = false;
     keyboard.DOWN = false;
-    keyboard.SPACE = false;
+    keyboard.B = false;
     ESCAPE = false;
 }
 
@@ -49,7 +50,7 @@ function loadingSpinner(show = true) {
     const spinner = document.getElementById("loadSpinner");
     if (spinner) {
         spinner.style.display = show ? 'flex' : 'none';
-        
+
     }
 }
 
@@ -170,17 +171,30 @@ function showYouWinScreen() {
 }
 
 function popUp() {
-    popUp = document.getElementById('popUp')
-    popUp.style.display = 'block'
+    const popupElement = document.getElementById('popUp');
+    popupElement.style.display = 'block';
 }
 
 function popUpYes() {
-    popUp = document.getElementById('popUp')
-    popUp.style.display = 'none'
+    if (world && typeof world.stop === 'function') {
+        world.stop();
+    }
+    world = null;
+    gameActive = false;
+    
+    const popupElement = document.getElementById('popUp');
+    popupElement.style.display = 'none';
+
+    const canvas = document.getElementById('canvas');
+    canvas.style.display = 'none';
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     init();
 }
 
 function popUpNO() {
-    popUp = document.getElementById('popUp')
-    popUp.style.display = 'none'
+    const popupElement = document.getElementById('popUp');
+    popupElement.style.display = 'none';
 }

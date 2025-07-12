@@ -14,6 +14,9 @@ class World {
     coins = new CoinObject();
     bottle = new BottleObject();
     chicken = new Chicken();
+    intervalId;
+    animationFrameId;
+    running = true;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -29,7 +32,7 @@ class World {
     };
 
     run() {
-        setInterval(() => {
+        this.intervalId = setInterval(() => {
             this.checkEnemyInteractions();
             this.checkChickenHitByBottle();
             this.checkCollectCoin();
@@ -44,7 +47,7 @@ class World {
     checkThrowObject() {
         const endboss = this.getEndboss();
         const canThrow =
-            this.keyboard.SPACE &&
+            this.keyboard.B &&
             this.bottleBar.bottle >= 1 &&
             (!endboss || (!endboss.alertAnimationPlaying && !endboss.attackAnimationPlaying));
 
@@ -150,6 +153,7 @@ class World {
     }
 
     draw() {
+        if (!this.running) return;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
@@ -175,9 +179,9 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
-        requestAnimationFrame(function () {
+        this.animationFrameId = requestAnimationFrame(() => {
             self.draw();
-        })
+        });
     }
 
     addObjectToMap(objects) {
@@ -214,5 +218,24 @@ class World {
 
     getEndboss() {
         return this.level.enemies.find(e => e instanceof Endboss);
+    }
+
+    stop() {
+        this.running = false;
+
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+            this.intervalId = null;
+        }
+
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+
+        Object.values(sounds).forEach(sound => {
+            sound.pause();
+            sound.currentTime = 0;
+        });
     }
 }

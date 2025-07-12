@@ -67,7 +67,7 @@ class Endboss extends MovableObject {
             } else if (this.isHurt) {
                 this.playAnimation(this.IMAGES_HURT);
             }
-            else if (world.character.x > 2000 && !this.hadFirstContact) {
+            else if (world?.character?.x >= 2000 && !this.hadFirstContact) {
                 this.hadFirstContact = true
                 this.playAlertAnimation();
             }

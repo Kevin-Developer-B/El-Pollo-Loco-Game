@@ -14,8 +14,8 @@ body {
     font-family: 'exile-regular', Arial, Helvetica, sans-serif;
 }
 
-.play-container{
-    position: relative;
+.play-container {
+    position: absolute;
     height: 100dvh;
     width: 100%;
     display: flex;
@@ -32,9 +32,12 @@ body {
     background-color: black;
     align-items: center;
     justify-content: center;
+    border-radius: 10px;
 }
 
 h1 {
+    color: rgb(255, 221, 0);
+    text-shadow: 3px 5px 6px rgba(0, 0, 0, 0.5);
     margin: 0 0 50px 0;
 }
 
@@ -46,12 +49,15 @@ h1 {
     text-align: center;
     height: 480px;
     width: 720px;
+    background-color: black;
     background-image: url('img/9_intro_outro_screens/start/startscreen_2.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     background-size: 100% 100%;
+    border-radius: 10px;
 }
+
 
 .start-buttons {
     position: absolute;
@@ -61,17 +67,19 @@ h1 {
 }
 
 .start-buttons button {
-    background-color: aqua;
+    background-color: rgb(255, 221, 0);
     border: 0;
     border-radius: 10px;
     cursor: pointer;
     transform: scale(1);
+    box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 0.5);
 }
 
 .start-buttons button:hover {
-    background-color: antiquewhite;
+    background-color: rgb(255, 162, 0);
     transition: 150ms ease-in-out;
     transform: scale(1.2);
+    box-shadow: 1px 2px 6px 2px rgba(226, 195, 95, 0.623);
 }
 
 .canvas-container {
@@ -83,6 +91,7 @@ h1 {
 canvas {
     background-color: black;
     display: block;
+    border-radius: 10px;
 }
 
 .settings-container {
@@ -123,35 +132,37 @@ svg {
     background-image: url('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e3e3e3"><path d="M136-80 400-344H160v-80h320v320h-80v-184L136-80Zm344-400v-320h80v184l264-264 56 56-264 264h184v80H480Z"/></svg>');
 }
 
-.mute-button{
+.mute-button {
     position: absolute;
     top: 15px;
     left: 50%;
 }
 
 .lost-game {
-    width: 100%;
-    height: 100%;
+    width: 720px;
+    height: 480px;
     background-color: rgb(233, 218, 169);
     background-image: url('img/You won, you lost/Game Over.png');
     background-size: 400px;
     background-position: center;
     background-repeat: no-repeat;
+    border-radius: 10px;
 }
 
-.win-game{
-    width: 100%;
-    height: 100%;
+.win-game {
+    width: 720px;
+    height: 480px;
     background-color: rgb(233, 218, 169);
     background-image: url('img/You won, you lost/You Win A.png');
-    background-size: cover;
+    background-size: 700px;
     background-position: center;
     background-repeat: no-repeat;
+    border-radius: 10px;
 }
 
 .close-button-container {
     width: 100%;
-    height: 80%;
+    height: 75%;
     display: flex;
     align-items: start;
     justify-content: end;
@@ -196,6 +207,7 @@ svg {
     font-family: 'Times New Roman', Times, serif;
     color: white;
     border-radius: 10px;
+    overflow: auto;
 }
 
 .imprint-container h2 {
@@ -208,31 +220,33 @@ svg {
 
 .imprint-container a {
     text-decoration: none;
-    color: brown;
+    color: rgb(255, 162, 0);
 }
 
 .imprint-container a:hover {
-    color: orange;
+    color: rgb(255, 221, 0);
 }
 
 .imprint-container button {
     margin-top: 10px;
     font-size: 15px;
     font-weight: 600;
-    color: rgb(102, 49, 25);
+    color: rgb(0, 0, 0);
+    text-shadow: 1px 1px 4px rgb(255, 255, 255);
 }
 
 .imprint-container button:hover {
-    color: orange;
+    color: rgb(53, 46, 10);
 }
 
 .layout-container {
+    height: 480px;
+    width: 720px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     background-color: rgba(156, 35, 51, 0.199);
-    padding: 30px;
     border-radius: 10px;
 }
 
@@ -242,15 +256,28 @@ svg {
     justify-content: center;
 }
 
+.instructions-header h2 {
+    text-shadow: 1px 1px 1px rgb(255, 162, 0);
+}
+
 .instructions-header button {
     position: absolute;
-    margin-left: 980px;
-    font-size: 30px;
+    margin-left: 80%;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.instructions-header button:hover {
+    color: rgb(255, 162, 0);
 }
 
 h2 {
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 0;
+}
+
+.layout-container img {
+    width: 90%;
 }
 
 .description-container {
@@ -258,6 +285,8 @@ h2 {
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
     font-family: fantasy;
+    margin: 0;
+    margin-top: 2px;
 }
 
 #mobile {
@@ -329,7 +358,7 @@ h2 {
     font-size: 32px;
 }
 
-.pop-up{
+.pop-up {
     display: none;
     position: fixed;
     text-align: center;
@@ -339,25 +368,46 @@ h2 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: aquamarine;
+    background-color: rgb(212, 66, 73);
+    border-radius: 10px;
+}
+
+.pop-up p {
+    color: rgb(255, 221, 0);
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.3);
+}
+
+.pop-up button {
+    font-weight: 600;
+    font-size: 20px;
+    color: white;
+}
+
+.pop-up button:hover {
+    color: rgb(182, 162, 35);
 }
 
 @media only screen and (max-width: 720px) {
-    h1{
+    .imprint {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    h1 {
         display: none;
     }
 
-    .menu-screens{
+    .menu-screens {
         height: 100dvh;
         width: 100%;
     }
 
-    .spinner-overlay{
+    .spinner-overlay {
         height: 100dvh;
         width: 100%;
     }
 
-    canvas{
+    canvas {
         height: 100dvh;
         width: 100%;
     }
@@ -365,25 +415,47 @@ h2 {
     #mobile {
         width: 100%;
         display: flex;
+    }
+
+    .layout-container {
+        height: 100dvh;
+        width: 100%;
+        padding: 0;
+    }
+
+    .lost-game {
+        height: 100dvh;
+        width: 100%;
+        background-size: 400px;
+    }
+
+    .win-game {
+        height: 100dvh;
+        width: 100%;
+        background-size: 500px;
     }
 }
 
 @media only screen and (max-height: 600px) {
-    h1{
+    .imprint {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    h1 {
         display: none;
     }
 
-    .menu-screens{
+    .menu-screens {
+        height: 100dvh;
+    }
+
+    .spinner-overlay {
         height: 100dvh;
         width: 100%;
     }
 
-    .spinner-overlay{
-        height: 100dvh;
-        width: 100%;
-    }
-
-    canvas{
+    canvas {
         height: 100dvh;
         width: 100%;
     }
@@ -391,6 +463,28 @@ h2 {
     #mobile {
         width: 100%;
         display: flex;
+    }
+
+    .layout-container {
+        height: 100dvh;
+        width: 100%;
+        padding: 0;
+    }
+
+    .layout-container img {
+        width: 70%;
+    }
+
+    .lost-game {
+        height: 100dvh;
+        width: 100%;
+        background-size: 400px;
+    }
+
+    .win-game {
+        height: 100dvh;
+        width: 100%;
+        background-size: 500px;
     }
 }
 
