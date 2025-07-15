@@ -1,3 +1,8 @@
+/**
+ * Returns the HTML template for the start menu.
+ * Includes buttons to view instructions, start the game, and view the imprint.
+ * @returns {string} HTML string of the start menu layout
+ */
 function startMenuTemplate() {
     return `
         <div class="start-buttons">
@@ -8,6 +13,11 @@ function startMenuTemplate() {
     `
 }
 
+/**
+ * Returns the HTML template for the instructions screen.
+ * Displays an image of the controls and a game description.
+ * @returns {string} HTML string of the instructions layout
+ */
 function instrctionsTemplate() {
     return `
         <div class="layout-container">
@@ -24,6 +34,11 @@ function instrctionsTemplate() {
     `
 }
 
+/**
+ * Returns the HTML template for the game over screen.
+ * Displays a close and restart button after the player loses.
+ * @returns {string} HTML string of the game over layout
+ */
 function gameOverTemplate() {
     return `
         <div class="lost-game">
@@ -35,6 +50,11 @@ function gameOverTemplate() {
     `
 }
 
+/**
+ * Returns the HTML template for the "you win" screen.
+ * Displays a close and restart button after the player wins the game.
+ * @returns {string} HTML string of the win screen layout
+ */
 function youWinTemplate() {
     return `
         <div class="win-game">

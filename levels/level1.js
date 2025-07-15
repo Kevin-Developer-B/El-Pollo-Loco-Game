@@ -1,5 +1,12 @@
+/**
+ * Level instance holding all game entities and background layers.
+ * @type {Level}
+ */
 let level1;
 
+/**
+ * Initializes the level with enemies, clouds, background layers, coins, and bottles.
+ */
 function initLevel() {
     level1 = new Level([
         new Chicken(),

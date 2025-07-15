@@ -1,4 +1,17 @@
+/**
+ * Handles keyboard and mobile touch input states.
+ * Tracks key presses for movement and actions.
+ */
 class Keyboard {
+
+    /** @type {boolean} Left arrow key pressed */
+    /** @type {boolean} Right arrow key pressed */
+    /** @type {boolean} Up arrow key pressed */
+    /** @type {boolean} Down arrow key pressed */
+    /** @type {boolean} Escape key pressed */
+    /** @type {boolean} 'B' key pressed */
+    /** @type {boolean} 'L' key pressed */
+    /** @type {boolean} Space key pressed (for mobile throw button) */
     LEFT = false;
     RIGHT = false;
     UP = false;
@@ -7,9 +20,17 @@ class Keyboard {
     B = false;
     L = false;
 
+    /**
+     * Creates a new Keyboard instance and initializes desktop key event listeners.
+     */
     constructor() {
         this.DesktopKeyEvents();
     }
+
+    /**
+     * Sets up event listeners for desktop keyboard keydown and keyup events.
+     * Updates key states accordingly, only if the game is active.
+     */
     DesktopKeyEvents() {
         window.addEventListener("keydown", (e) => {
             if (!gameActive) return;
@@ -75,7 +96,10 @@ class Keyboard {
         });
     }
 
-
+    /**
+     * Sets up touch event listeners for mobile controls.
+     * Prevents default touch behavior and updates input states.
+     */
     MobilePressEvents() {
         document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
             e.preventDefault();

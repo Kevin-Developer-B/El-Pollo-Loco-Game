@@ -1,5 +1,10 @@
+/**
+ * Represents the bottle status bar UI element showing bottle charge level.
+ * Extends DrawableObject to handle image rendering and caching.
+ */
 class BottleBar extends DrawableObject {
 
+    /** @type {string[]} Paths to bottle bar images representing charge levels */
    BOTTLE_IMAGES = [
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/0.png',
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/20.png',
@@ -10,8 +15,12 @@ class BottleBar extends DrawableObject {
 
     ];
 
+    /** @type {number} Current bottle charge level (0 to 5) */
     bottle = 0;
     
+     /**
+     * Initializes the bottle bar by loading images and setting default properties.
+     */
     constructor() {
         super();
         this.loadImages(this.BOTTLE_IMAGES);
@@ -22,12 +31,20 @@ class BottleBar extends DrawableObject {
         this.setPercentageBottle(0);
     }
 
+    /**
+     * Sets the current bottle charge level and updates the displayed image.
+     * @param {number} bottle - The current bottle level (integer from 0 to 5).
+     */
     setPercentageBottle(bottle) {
         this.bottle = bottle;
         let path = this.BOTTLE_IMAGES[this.resolveBottleIndex()];
         this.img = this.imageCache[path];
     }
 
+     /**
+     * Determines the correct index for the bottle image based on the current bottle level.
+     * @returns {number} Index in BOTTLE_IMAGES corresponding to the current bottle level.
+     */
     resolveBottleIndex() {
         if (this.bottle == 5) {
             return 5;
