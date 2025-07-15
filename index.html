@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="img/8_coin/coin_1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/assets/sombrero.png" type="image/x-icon">
     <title>El Pollo Loco</title>
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
@@ -30,7 +30,7 @@
     <script src="template/template.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="init()" translate="no">
     <div class="play-container">
         <h1>El Pollo Loco</h1>
         <div id="loadSpinner" class="spinner-overlay d-none">
@@ -75,7 +75,7 @@
             <div id="popUp" class="pop-up">
                 <p>Do you want to return to the main menu?</p>
                 <button onclick="popUpYes()">YES</button>
-                <button onclick="popUpNO()">No</button>
+                <button onclick="popUpNO()">NO</button>
             </div>
         </div>
         <div class="rotation-notice">

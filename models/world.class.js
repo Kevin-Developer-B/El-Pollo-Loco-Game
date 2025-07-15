@@ -217,7 +217,7 @@ class World {
                 !bottle.hasSplashed &&
                 bottle.isColliding(endboss)
             ) {
-                endboss.bossHit(25);
+                endboss.bossHit(20);
                 this.bossBar.setPercentageBoss(endboss.energy);
                 bottle.bossHitSplash();
             }
