@@ -31,10 +31,6 @@ class World {
     keyboard;
     sounds;
     camera_x = 0;
-    healthBar = new HealthBar();
-    coinBar = new CoinBar();
-    bottleBar = new BottleBar();
-    bossBar = new BossBar();
     throwableObject = [];
     coins = new CoinObject();
     bottle = new BottleObject();
@@ -52,10 +48,49 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.initStatusBars();
         this.draw();
         this.setWorld();
         this.run();
     }
+
+    initStatusBars() {
+        this.healthBar = new StatusBar('health');
+        this.coinBar = new StatusBar('coin');
+        this.bottleBar = new StatusBar('bottle');
+        this.bossBar = new StatusBar('boss');
+        this.initStatusBarsValues();
+    }
+
+    initStatusBarsValues() {
+        this.initHealthBarsValues()
+        this.initCollectObjectsBarsValues()
+    }
+
+    initHealthBarsValues() {
+        this.healthBar.x = 20;
+        this.healthBar.y = 0;
+        this.healthBar.height = 50;
+        this.healthBar.width = 200;
+
+        this.bossBar.x = 500;
+        this.bossBar.y = 10;
+        this.bossBar.height = 50;
+        this.bossBar.width = 200;
+    }
+
+    initCollectObjectsBarsValues() {
+        this.coinBar.x = 20;
+        this.coinBar.y = 50;
+        this.coinBar.height = 50;
+        this.coinBar.width = 200;
+
+        this.bottleBar.x = 20;
+        this.bottleBar.y = 100;
+        this.bottleBar.height = 50;
+        this.bottleBar.width = 200;
+    }
+
 
     /**
      * Sets the world reference in the character object.
@@ -94,8 +129,8 @@ class World {
             let bottle = new ThrowableObject(this.character.x + offsetX, this.character.y + 90, direction);
             sounds.throw.play();
             this.throwableObject.push(bottle);
-            this.bottleBar.bottle--;
-            this.bottleBar.setPercentageBottle(this.bottleBar.bottle);
+            this.bottleBar.bottle -= 20;
+            this.bottleBar.setPercentage(this.bottleBar.bottle);
         }
     }
 
@@ -181,7 +216,7 @@ class World {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
                 this.coinBar.coins += 20;
-                this.coinBar.setPercentageCoin(this.coinBar.coins);
+                this.coinBar.setPercentage(this.coinBar.coins);
                 sounds.coin.play();
                 this.level.coins.splice(index, 1);
             };
@@ -195,10 +230,10 @@ class World {
         this.level.bottles.forEach((bottle, index) => {
             if (
                 this.character.isColliding(bottle) &&
-                this.bottleBar.bottle < 5
+                this.bottleBar.bottle < 100
             ) {
-                this.bottleBar.bottle++;
-                this.bottleBar.setPercentageBottle(this.bottleBar.bottle);
+                this.bottleBar.bottle += 20;
+                this.bottleBar.setPercentage(this.bottleBar.bottle);
                 this.level.bottles.splice(index, 1);
                 sounds.bottle_clanging.play();
             }
@@ -217,8 +252,8 @@ class World {
                 !bottle.hasSplashed &&
                 bottle.isColliding(endboss)
             ) {
-                endboss.bossHit(20);
-                this.bossBar.setPercentageBoss(endboss.energy);
+                endboss.bossHit(15);
+                this.bossBar.setPercentage(endboss.energy);
                 bottle.bossHitSplash();
             }
         });

@@ -6,7 +6,7 @@
 function startMenuTemplate() {
     return `
         <div class="start-buttons">
-            <button onclick="loadInstrctionsScreen()">Instrctions</button>
+            <button onclick="loadInstrctionsScreen()">Instructions</button>
             <button onclick="startTheGame()">Start Game</button>
             <button onclick="showImprint()">Imprint</button>
         </div>

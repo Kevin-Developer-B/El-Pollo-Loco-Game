@@ -181,6 +181,7 @@ class Endboss extends MovableObject {
             sounds.chicken_sound.play();
             setTimeout(() => {
                 this.isHurt = false;
+                this.playAttackAnimation();
             }, 1000);
         }
     }

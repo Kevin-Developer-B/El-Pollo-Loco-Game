@@ -387,6 +387,20 @@ h2 {
     color: rgb(182, 162, 35);
 }
 
+@media only screen and (max-width: 1368px) {
+    #mobile {
+        width: 100%;
+        display: flex;
+    }
+}
+
+/* @media only screen and (max-height: 1024px) {
+    #mobile {
+        width: 100%;
+        display: flex;
+    }
+} */
+
 @media only screen and (max-width: 720px) {
     .imprint {
         display: block;

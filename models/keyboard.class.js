@@ -28,72 +28,47 @@ class Keyboard {
     }
 
     /**
-     * Sets up event listeners for desktop keyboard keydown and keyup events.
-     * Updates key states accordingly, only if the game is active.
-     */
+    * A mapping between key codes and logical keyboard actions.
+    * Used to translate physical key presses into game input states. 
+    * Key codes:
+    * - 27: ESCAPE
+    * - 37: LEFT arrow
+    * - 38: UP arrow
+    * - 39: RIGHT arrow
+    * - 40: DOWN arrow
+    * - 66: B key
+    * - 76: L key
+    */
+    keyMap = {
+        27: 'ESCAPE',
+        37: 'LEFT',
+        38: 'UP',
+        39: 'RIGHT',
+        40: 'DOWN',
+        66: 'B',
+        76: 'L'
+    };
+
+    /**
+    * Handles keyboard input events and updates the keyboard state accordingly.
+    * Triggers popup if ESCAPE key is pressed.
+    * @param {KeyboardEvent} e - The keyboard event triggered by user input.
+    * @param {boolean} state - True for keydown, false for keyup.
+    */
+    handleKey(e, state) {
+        if (!gameActive) return;
+        if (e.keyCode === 27 && state) popUp();
+        const key = this.keyMap[e.keyCode];
+        if (key) keyboard[key] = state;
+    }
+
+    /**
+    * Initializes key event listeners for desktop keyboard input.
+    * Registers handlers for keydown and keyup events.
+    */
     DesktopKeyEvents() {
-        window.addEventListener("keydown", (e) => {
-            if (!gameActive) return;
-            if (e.keyCode == 27) {
-                popUp();
-            }
-
-            if (e.keyCode == 37) {
-                keyboard.LEFT = true;
-            }
-
-            if (e.keyCode == 38) {
-                keyboard.UP = true;
-            }
-
-            if (e.keyCode == 39) {
-                keyboard.RIGHT = true;
-            }
-
-            if (e.keyCode == 40) {
-                keyboard.DOWN = true;
-            }
-            if (e.keyCode == 27) {
-                keyboard.DOWN = true;
-            }
-             if (e.keyCode == 66) {
-                keyboard.B = true;
-            }
-            if (e.keyCode == 76) {
-                keyboard.L = true;
-            }
-        });
-
-        window.addEventListener("keyup", (e) => {
-            if (!gameActive) return;
-            if (e.keyCode == 27) {
-                keyboard.ESCAPE = false;
-            }
-
-            if (e.keyCode == 37) {
-                keyboard.LEFT = false;
-            }
-
-            if (e.keyCode == 38) {
-                keyboard.UP = false;
-            }
-
-            if (e.keyCode == 39) {
-                keyboard.RIGHT = false;
-            }
-
-            if (e.keyCode == 40) {
-                keyboard.DOWN = false;
-            }
-
-            if (e.keyCode == 66) {
-                keyboard.B = false;
-            }
-
-            if (e.keyCode == 76) {
-                keyboard.L = false;
-            }
-        });
+        window.addEventListener("keydown", e => this.handleKey(e, true));
+        window.addEventListener("keyup", e => this.handleKey(e, false));
     }
 
     /**
@@ -101,6 +76,13 @@ class Keyboard {
      * Prevents default touch behavior and updates input states.
      */
     MobilePressEvents() {
+        this.moveLeft();
+        this.moveRight();
+        this.moveJump()
+        this.moveThrow();
+    }
+
+    moveLeft() {
         document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
             e.preventDefault();
             this.LEFT = true;
@@ -109,7 +91,9 @@ class Keyboard {
             e.preventDefault();
             this.LEFT = false;
         });
+    }
 
+    moveRight() {
         document.getElementById('btnRight').addEventListener('touchstart', (e) => {
             e.preventDefault();
             this.RIGHT = true;
@@ -118,7 +102,9 @@ class Keyboard {
             e.preventDefault();
             this.RIGHT = false;
         });
+    }
 
+    moveJump() {
         document.getElementById('btnJump').addEventListener('touchstart', (e) => {
             e.preventDefault();
             this.UP = true;
@@ -127,14 +113,16 @@ class Keyboard {
             e.preventDefault();
             this.UP = false;
         });
+    }
 
+    moveThrow() {
         document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
             e.preventDefault();
-            this.SPACE = true;
+            this.B = true;
         });
         document.getElementById('btnThrow').addEventListener('touchend', (e) => {
             e.preventDefault();
-            this.SPACE = false;
+            this.B = false;
         });
     }
 
