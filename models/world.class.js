@@ -38,6 +38,8 @@ class World {
     intervalId;
     animationFrameId;
     running = true;
+    lastThrowTime = 0;
+    throwCooldown = 1500;
 
     /**
      * Initializes the World instance.
@@ -54,6 +56,11 @@ class World {
         this.run();
     }
 
+    /**
+    * Initializes all status bars used in the game UI,
+    * including health, coins, bottles, and the boss health bar.
+    * Also calls methods to configure their initial positions and sizes.
+    */
     initStatusBars() {
         this.healthBar = new StatusBar('health');
         this.coinBar = new StatusBar('coin');
@@ -62,11 +69,19 @@ class World {
         this.initStatusBarsValues();
     }
 
+    /**
+    * Initializes the values (position and size) of all status bars
+    * by calling dedicated setup functions for each type.
+    */
     initStatusBarsValues() {
         this.initHealthBarsValues()
         this.initCollectObjectsBarsValues()
     }
 
+    /**
+    * Sets the position and dimensions of the health and boss bars.
+    * This determines where they appear on the canvas and how large they are.
+    */
     initHealthBarsValues() {
         this.healthBar.x = 20;
         this.healthBar.y = 0;
@@ -79,6 +94,10 @@ class World {
         this.bossBar.width = 200;
     }
 
+    /**
+    * Sets the position and dimensions of the coin and bottle bars.
+    * These values determine their placement and visual size on the canvas.
+    */
     initCollectObjectsBarsValues() {
         this.coinBar.x = 20;
         this.coinBar.y = 50;
@@ -90,7 +109,6 @@ class World {
         this.bottleBar.height = 50;
         this.bottleBar.width = 200;
     }
-
 
     /**
      * Sets the world reference in the character object.
@@ -118,20 +136,36 @@ class World {
     * Checks if the player can throw a bottle and creates a new ThrowableObject if possible.
     */
     checkThrowObject() {
+        const now = new Date().getTime();
         const endboss = this.getEndboss();
         const canThrow =
             this.keyboard.B &&
             this.bottleBar.bottle >= 1 &&
-            (!endboss || (!endboss.alertAnimationPlaying && !endboss.attackAnimationPlaying));
+            (!endboss || (!endboss.alertAnimationPlaying && !endboss.attackAnimationPlaying)) &&
+            (now - this.lastThrowTime >= this.throwCooldown);
         if (canThrow) {
-            let direction = this.character.otherDirection ? -1 : 1;
-            let offsetX = direction * 50;
-            let bottle = new ThrowableObject(this.character.x + offsetX, this.character.y + 90, direction);
-            sounds.throw.play();
-            this.throwableObject.push(bottle);
-            this.bottleBar.bottle -= 20;
-            this.bottleBar.setPercentage(this.bottleBar.bottle);
+            this.throwBottle.call(this, this.character, this.bottleBar, this.throwableObject, now);
         }
+    }
+
+    /**
+     * Throws a bottle from the character's current position in the correct direction.
+     * Plays the throw sound, updates the bottle count, and tracks the last throw time.
+     * @param {Character} character - The player character who throws the bottle.
+     * @param {StatusBar} bottleBar - The bottle status bar to update the bottle amount.
+     * @param {Array<ThrowableObject>} throwableObject - The array to push the new bottle into.
+     * @param {number} now - The current timestamp used to update the last throw time.
+    */
+    throwBottle(character, bottleBar, throwableObject, now) {
+        const direction = character.otherDirection ? -1 : 1;
+        const offsetX = direction * 50;
+        const bottle = new ThrowableObject(character.x + offsetX, character.y + 90, direction);
+
+        sounds.throw.play();
+        throwableObject.push(bottle);
+        bottleBar.bottle -= 20;
+        bottleBar.setPercentage(bottleBar.bottle);
+        this.lastThrowTime = now;
     }
 
     /**
@@ -246,7 +280,6 @@ class World {
     checkEndbossHit() {
         const endboss = this.level.enemies.find(e => e instanceof Endboss);
         if (!endboss) return;
-
         this.throwableObject.forEach((bottle) => {
             if (
                 !bottle.hasSplashed &&

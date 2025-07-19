@@ -53,10 +53,10 @@ class Chicken extends MovableObject {
      * Defines the offset values used for collision detection.
      */
     offset = {
-        top: 0,
+        top: -30,
         bottom: 0,
-        left: 0,
-        right: 0
+        left: -10,
+        right: -10
     }
 
     /**

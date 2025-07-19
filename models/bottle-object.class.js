@@ -35,5 +35,13 @@ class BottleObject extends MovableObject {
         this.x = 500 + Math.random() * 1000;
     }
 
-    
+    /**
+     * Defines the offset values used for collision detection.
+     */
+    offset = {
+        top: 20,
+        bottom: 10,
+        left: 25,
+        right: 25
+    }
 }

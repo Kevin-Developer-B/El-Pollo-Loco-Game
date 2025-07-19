@@ -125,10 +125,10 @@ class Character extends MovableObject {
     * Useful for precise collision detection.
     */
     offset = {
-        top: 100,
-        bottom: 0,
-        left: 20,
-        right: 20
+        top: 130,
+        bottom: 10,
+        left: 30,
+        right: 30
     }
 
     /**
@@ -172,6 +172,43 @@ class Character extends MovableObject {
     jumpUp() {
         this.playAnimation([this.IMAGES_JUMP[2]]);
         this.jump();
+    }
+
+    /**
+     * Determines if this object is jumping on top of an enemy.
+     * @param {MovableObject} enemy - The enemy object.
+     * @returns {boolean} True if jumping on enemy.
+     */
+    isJumpingOn(enemy) {
+        const isAbove = this.y + this.height <= enemy.y + 20;
+        const isFalling = this.speedY < 0;
+        return isAbove && isFalling;
+    }
+
+    /**
+     * Reduces energy when hit and applies knockback and hurt state.
+     */
+    hit() {
+        if (this.isHurt()) return;
+        this.energy -= 12.5;
+        if (this.energy < 0) return this.energy = 0;
+        this.lastHit = Date.now();
+        this.lastActionTime = Date.now();
+        this.isHurtStatus = true;
+        this.isKnockedBack = true;
+        this.applyKnockback();
+        setTimeout(() => {
+            this.isKnockedBack = false;
+            this.isHurtStatus = false;
+        }, 700);
+    }
+
+    /**
+     * Applies knockback movement based on direction.
+     */
+    applyKnockback() {
+        const kb = 20;
+        this.x += this.otherDirection ? kb : -kb;
     }
 
     /**
@@ -317,6 +354,4 @@ class Character extends MovableObject {
             sounds.snoring.currentTime = 0;
         }
     }
-
-
 }

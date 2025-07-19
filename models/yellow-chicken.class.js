@@ -50,6 +50,16 @@ class YellowChicken extends MovableObject {
     }
 
     /**
+     * Defines the offset values used for collision detection.
+     */
+    offset = {
+        top: -30,
+        bottom: 10,
+        left: -10,
+        right: -10
+    }
+
+    /**
      * Starts the walking, jumping, and animation intervals for the chicken.
      * - Moves left continuously.
      * - Plays walking animation.

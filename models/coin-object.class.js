@@ -39,6 +39,16 @@ class CoinObject extends MovableObject {
     }
 
     /**
+     * Defines the offset values used for collision detection.
+     */
+    offset = {
+        top: 50,
+        bottom: 25,
+        left: 50,
+        right: 50
+    }
+
+    /**
      * Animates the coin by cycling through coin images every 500ms.
      */
     animation() {

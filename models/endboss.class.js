@@ -79,6 +79,16 @@ class Endboss extends MovableObject {
     }
 
     /**
+     * Defines the offset values used for collision detection.
+     */
+    offset = {
+        top: 50,
+        bottom: 30,
+        left: 35,
+        right: 25
+    }
+
+    /**
      * Main animation loop for the boss, switching between animations based on state.
      */
     animation() {
@@ -141,7 +151,6 @@ class Endboss extends MovableObject {
             } else {
                 clearInterval(this.alertInterval);
                 this.alertAnimationPlaying = false;
-                this.playAttackAnimation();
             }
         }, 150);
     }
@@ -181,7 +190,6 @@ class Endboss extends MovableObject {
             sounds.chicken_sound.play();
             setTimeout(() => {
                 this.isHurt = false;
-                this.playAttackAnimation();
             }, 1000);
         }
     }

@@ -49,6 +49,17 @@ class DrawableObject {
             ctx.strokeStyle = 'transparent';
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
+
+            const collisionX = this.x + this.offset.left;
+            const collisionY = this.y + this.offset.top;
+            const collisionWidth = this.width - this.offset.left - this.offset.right;
+            const collisionHeight = this.height - this.offset.top - this.offset.bottom;
+
+            ctx.beginPath();
+            ctx.lineWidth = 0;
+            ctx.strokeStyle = 'transparent';
+            ctx.rect(collisionX, collisionY, collisionWidth, collisionHeight);
+            ctx.stroke();
         }
     }
 

@@ -75,43 +75,6 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-     * Determines if this object is jumping on top of an enemy.
-     * @param {MovableObject} enemy - The enemy object.
-     * @returns {boolean} True if jumping on enemy.
-     */
-    isJumpingOn(enemy) {
-        const isAbove = this.y + this.height <= enemy.y + 20;
-        const isFalling = this.speedY < 0;
-        return isAbove && isFalling;
-    }
-
-    /**
-     * Reduces energy when hit and applies knockback and hurt state.
-     */
-    hit() {
-        if (this.isHurt()) return;
-        this.energy -= 15.5;
-        if (this.energy < 0) return this.energy = 0;
-        this.lastHit = Date.now();
-        this.lastActionTime = Date.now();
-        this.isHurtStatus = true;
-        this.isKnockedBack = true;
-        this.applyKnockback();
-        setTimeout(() => {
-            this.isKnockedBack = false;
-            this.isHurtStatus = false;
-        }, 800);
-    }
-
-    /**
-     * Applies knockback movement based on direction.
-     */
-    applyKnockback() {
-        const kb = 40;
-        this.x += this.otherDirection ? kb : -kb;
-    }
-
-    /**
     * Checks if the object is currently in a hurt state.
     * @returns {boolean} True if hurt.
     */

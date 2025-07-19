@@ -82,6 +82,11 @@ class Keyboard {
         this.moveThrow();
     }
 
+    /**
+    * Enables left movement by setting the `LEFT` flag to true when the
+    * left button is touched, and resetting it to false when the touch ends.
+    * Prevents default touch behavior to avoid unintended browser interactions.
+    */
     moveLeft() {
         document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -93,6 +98,11 @@ class Keyboard {
         });
     }
 
+    /**
+    * Enables right movement by setting the `RIGHT` flag to true when the
+    * right button is touched, and resetting it to false when the touch ends.
+    * Prevents default touch behavior to avoid unintended browser interactions.
+    */
     moveRight() {
         document.getElementById('btnRight').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -104,6 +114,11 @@ class Keyboard {
         });
     }
 
+    /**
+    * Enables jumping by setting the `UP` flag to true when the jump button is touched,
+    * and resetting it to false when the touch ends.
+    * Prevents default touch behavior to avoid unintended browser interactions.
+    */
     moveJump() {
         document.getElementById('btnJump').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -115,6 +130,11 @@ class Keyboard {
         });
     }
 
+    /**
+    * Enables bottle throwing by setting the `B` flag to true when the throw button is touched,
+    * and resetting it to false when the touch ends.
+    * Prevents default touch behavior to avoid unintended browser interactions.
+    */
     moveThrow() {
         document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
             e.preventDefault();
