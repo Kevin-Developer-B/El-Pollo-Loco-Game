@@ -45,8 +45,8 @@ class DrawableObject {
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken || this instanceof YellowChicken || this instanceof CoinObject || this instanceof BottleObject || this instanceof Endboss) {
             ctx.beginPath();
-            ctx.lineWidth = '0';
-            ctx.strokeStyle = 'transparent';
+            ctx.lineWidth = '1px';
+            ctx.strokeStyle = 'grey';
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
 
@@ -56,8 +56,8 @@ class DrawableObject {
             const collisionHeight = this.height - this.offset.top - this.offset.bottom;
 
             ctx.beginPath();
-            ctx.lineWidth = 0;
-            ctx.strokeStyle = 'transparent';
+            ctx.lineWidth = '2px';
+            ctx.strokeStyle = 'yellow';
             ctx.rect(collisionX, collisionY, collisionWidth, collisionHeight);
             ctx.stroke();
         }
