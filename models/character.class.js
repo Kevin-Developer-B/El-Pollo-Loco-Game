@@ -260,7 +260,7 @@ class Character extends MovableObject {
     */
     handleIdleAndSleep() {
         const idleTime = Date.now() - this.lastActionTime;
-        const sleeping = idleTime > 15000;
+        const sleeping = idleTime > 5000;
 
         if (sleeping && !this.isSleeping) this.enterSleep();
         else if (!sleeping && this.isSleeping) this.wakeUp();

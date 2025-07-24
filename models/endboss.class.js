@@ -84,7 +84,7 @@ class Endboss extends MovableObject {
     offset = {
         top: 50,
         bottom: 30,
-        left: 35,
+        left: 25,
         right: 25
     }
 
@@ -151,6 +151,7 @@ class Endboss extends MovableObject {
             } else {
                 clearInterval(this.alertInterval);
                 this.alertAnimationPlaying = false;
+                this.playAttackAnimation();
             }
         }, 150);
     }
