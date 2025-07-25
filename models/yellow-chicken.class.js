@@ -55,8 +55,8 @@ class YellowChicken extends MovableObject {
     offset = {
         top: -15,
         bottom: 10,
-        left: -10,
-        right: -10
+        left: -2,
+        right: -2
     }
 
     /**
@@ -73,7 +73,7 @@ class YellowChicken extends MovableObject {
             this.playAnimation(this.IMAGES_WALKING)
         }, 300);
         setInterval(() => {
-            if (Math.random() < 0.10) { // 
+            if (Math.random() < 0.10) { 
                 this.littleJump();
             }
         }, 200);

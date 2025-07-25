@@ -75,6 +75,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 2500;
+        this.applyGravity();
         this.animation();
     }
 
@@ -84,8 +85,8 @@ class Endboss extends MovableObject {
     offset = {
         top: 50,
         bottom: 30,
-        left: 25,
-        right: 25
+        left: 100,
+        right: 100
     }
 
     /**
@@ -191,6 +192,7 @@ class Endboss extends MovableObject {
             sounds.chicken_sound.play();
             setTimeout(() => {
                 this.isHurt = false;
+                this.littleJumpBoss();
             }, 1000);
         }
     }

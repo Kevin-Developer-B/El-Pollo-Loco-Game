@@ -14,7 +14,7 @@ class MovableObject extends DrawableObject {
     * @type {number} Timestamp (in ms) of the last time the object was hit.
     * @type {number} Y-position representing the ground level.
     */
-    speed = 0.15;
+    speed = 0.35;
     otherDirection = false;
     isKnockedBack = false;
     isHurtStatus = false;
@@ -56,11 +56,21 @@ class MovableObject extends DrawableObject {
      */
     isColliding(mo) {
         if (!mo) return false;
-        return this.x + this.width - this.offset.right > mo.x + this.offset.left &&
-            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-            this.x + this.offset.left < mo.width + mo.x - mo.offset.right &&
-            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
 
+        const thisLeft = this.x + this.offset.left;
+        const thisRight = this.x + this.width - this.offset.right;
+        const thisTop = this.y + this.offset.top;
+        const thisBottom = this.y + this.height - this.offset.bottom;
+
+        const moLeft = mo.x + mo.offset.left;
+        const moRight = mo.x + mo.width - mo.offset.right;
+        const moTop = mo.y + mo.offset.top;
+        const moBottom = mo.y + mo.height - mo.offset.bottom;
+
+        return thisRight > moLeft &&
+            thisBottom > moTop &&
+            thisLeft < moRight &&
+            thisTop < moBottom;
     }
 
     /**
@@ -142,6 +152,26 @@ class MovableObject extends DrawableObject {
         if (this.dead) return;
         this.speedY = 8;
         this.wantsToJump = false;
+    }
+
+    /**
+     * Performs a smaller jump.
+     */
+    littleJumpBoss() {
+        if (this.dead) return;
+        this.speedY = 15;
+        this.isJumping = true;
+        this.wantsToJump = false;
+        const jumpDistance = 60;
+        const moveIntervalTime = 85; 
+        const totalSteps = 5;
+        let steps = 0;
+
+        let jumpForwardInterval = setInterval(() => {
+            this.x -= jumpDistance / totalSteps;
+            steps++;
+            if (steps >= totalSteps) clearInterval(jumpForwardInterval);
+        }, moveIntervalTime);
     }
 
     /**

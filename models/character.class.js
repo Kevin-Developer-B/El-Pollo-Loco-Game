@@ -128,7 +128,7 @@ class Character extends MovableObject {
         top: 130,
         bottom: 10,
         left: 30,
-        right: 30
+        right: 35
     }
 
     /**
@@ -190,7 +190,7 @@ class Character extends MovableObject {
      */
     hit() {
         if (this.isHurt()) return;
-        this.energy -= 12.5;
+        this.energy -= 20;
         if (this.energy < 0) return this.energy = 0;
         this.lastHit = Date.now();
         this.lastActionTime = Date.now();
@@ -216,18 +216,20 @@ class Character extends MovableObject {
     * Triggers corresponding animations and state transitions (e.g., sleep, wake).
     */
     handleIdleAndHurtLoop() {
-        setInterval(() => {
-            if (this.handleDeath() || this.handleHurt()) return;
-            const kb = this.world.keyboard;
-            if (kb.RIGHT || kb.LEFT || kb.UP || this.isHurtStatus) {
-                this.lastActionTime = Date.now();
-                if (this.isSleeping) this.wakeUp();
-                this.walkAnimation();
-                return;
-            }
-            this.handleIdleAndSleep();
-        }, 100);
-    }
+    setInterval(() => {
+        if (this.handleDeath() || this.handleHurt()) return;
+        const kb = this.world.keyboard;
+        const isMoving = kb.RIGHT || kb.LEFT;
+        const isActive = isMoving || kb.UP || kb.B || this.isHurtStatus;
+        if (isActive) {
+            this.lastActionTime = Date.now();
+            if (this.isSleeping) this.wakeUp();
+            if (isMoving) this.walkAnimation();
+            return;
+        }
+        this.handleIdleAndSleep();
+    }, 100);
+}
 
     /**
     * Checks if the character is dead and, if not already triggered, starts the death animation.
