@@ -163,8 +163,9 @@ class MovableObject extends DrawableObject {
         this.isJumping = true;
         this.wantsToJump = false;
         const jumpDistance = 60;
+        sounds.boss_alert.play();
         const moveIntervalTime = 85; 
-        const totalSteps = 5;
+        const totalSteps = 35;
         let steps = 0;
 
         let jumpForwardInterval = setInterval(() => {
